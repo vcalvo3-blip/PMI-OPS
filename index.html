@@ -12,77 +12,79 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --bg:#020818;--bg2:#070d26;--bg3:#0d1535;
-  --teal:#00f5d4;--pink:#f72585;--orange:#f8961e;--blue:#4cc9f0;--yellow:#ffd60a;--green:#b5e48c;--red:#ff6b6b;--purple:#b77fff;
   --text:#eaf5ff;--sub:#a0b8cc;--muted:#4a6070;--dimmed:#1a2a3a;
-  --finger:#00f5d4;--contacto:#4cc9f0;--remoto:#f72585;--nd:#667788;
-  --DC4:#00f5d4;--DD8:#f72585;--EJU:#f8961e;--HU3:#4cc9f0;--HS1:#b77fff;--EXS:#b5e48c;--RYR:#ff6b6b;--EWG:#ffd60a;
+  --finger:#00f5d4;   /* teal   — pasarela */
+  --contacto:#4cc9f0; /* blue   — plataforma sin finger */
+  --rbus:#f8961e;     /* orange — remoto con bus */
+  --rpie:#f72585;     /* pink   — remoto a pie */
+  --nd:#445566;
+  --DC4:#00f5d4;--DD8:#f72585;--EJU:#f8961e;--HU3:#4cc9f0;
+  --HS1:#b77fff;--EXS:#b5e48c;--RYR:#ff6b6b;--EWG:#ffd60a;
 }
 html,body{height:100%;overflow:hidden;}
 body{
-  background:var(--bg);
-  font-family:'Courier New',Courier,monospace;
-  color:var(--text);
-  display:flex;flex-direction:column;
+  background:var(--bg);font-family:'Courier New',Courier,monospace;
+  color:var(--text);display:flex;flex-direction:column;
   -webkit-tap-highlight-color:transparent;
 }
 body::before{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:linear-gradient(rgba(0,245,212,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,212,0.025) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(0,245,212,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,245,212,0.025) 1px,transparent 1px);
   background-size:44px 44px;
 }
 
-/* ── HEADER ── */
+/* HEADER */
 .header{
-  position:relative;z-index:10;
+  position:relative;z-index:10;flex-shrink:0;
   background:linear-gradient(180deg,rgba(2,8,24,0.98),rgba(7,13,38,0.95));
   border-bottom:1px solid rgba(0,245,212,0.12);
   padding:max(env(safe-area-inset-top),14px) 16px 0;
-  flex-shrink:0;
 }
-.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.header-title{font-size:11px;font-weight:900;letter-spacing:5px;color:var(--teal);text-transform:uppercase;}
-.header-date{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
-.header-sub{font-size:10px;color:var(--sub);letter-spacing:2px;margin-bottom:10px;}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;}
+.header-title{font-size:13px;font-weight:900;letter-spacing:4px;color:#00f5d4;text-transform:uppercase;}
+.header-meta{font-size:9px;color:var(--muted);letter-spacing:2px;margin-top:2px;}
+.header-date{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;text-align:right;}
 
-/* ── TABS ── */
-.tabs{display:flex;gap:2px;}
+/* TIPO LEGEND */
+.tipo-legend{display:flex;gap:10px;flex-wrap:wrap;padding:8px 0;margin-bottom:6px;}
+.tl-item{display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:1px;color:var(--sub);}
+.tl-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+
+/* TABS */
+.tabs{display:flex;gap:0;}
 .tab{
-  flex:1;padding:9px 4px;text-align:center;
-  font-family:inherit;font-size:9px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;color:var(--muted);
-  background:none;border:none;border-bottom:2px solid transparent;
-  cursor:pointer;transition:all 0.2s;
+  flex:1;padding:9px 4px;text-align:center;font-family:inherit;
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);background:none;border:none;
+  border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s;
 }
-.tab.active{color:var(--teal);border-bottom-color:var(--teal);}
-.tab-icon{font-size:14px;display:block;margin-bottom:2px;}
+.tab.active{color:#00f5d4;border-bottom-color:#00f5d4;}
+.tab-icon{font-size:13px;display:block;margin-bottom:2px;}
 
-/* ── CONTENT ── */
+/* CONTENT */
 .content{
-  position:relative;z-index:1;
-  flex:1;overflow-y:auto;overflow-x:hidden;
-  padding:14px 12px calc(env(safe-area-inset-bottom,0px) + 16px);
+  position:relative;z-index:1;flex:1;overflow-y:auto;overflow-x:hidden;
+  padding:12px 10px calc(env(safe-area-inset-bottom,0px)+16px);
   -webkit-overflow-scrolling:touch;
 }
 .panel{display:none;}
 .panel.active{display:block;}
 
-/* ── FILTERS ── */
-.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+/* FILTERS */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
 .filter-btn{
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:6px;padding:5px 10px;
-  font-family:inherit;font-size:10px;font-weight:700;letter-spacing:2px;
-  color:var(--muted);cursor:pointer;text-transform:uppercase;
-  transition:all 0.15s;touch-action:manipulation;
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);
+  border-radius:6px;padding:5px 10px;font-family:inherit;font-size:10px;
+  font-weight:700;letter-spacing:2px;color:var(--muted);cursor:pointer;
+  text-transform:uppercase;transition:all 0.15s;touch-action:manipulation;
 }
 .filter-btn.active{color:#020818;font-weight:900;}
-.filter-btn.all.active{background:var(--teal);border-color:var(--teal);color:#020818;}
-.filter-btn.finger.active{background:var(--finger);border-color:var(--finger);}
-.filter-btn.contacto.active{background:var(--contacto);border-color:var(--contacto);}
-.filter-btn.remoto.active{background:var(--remoto);border-color:var(--remoto);}
-
-/* handler filter colors */
+.filter-btn.f-all.active{background:#00f5d4;border-color:#00f5d4;}
+.filter-btn.f-finger.active{background:var(--finger);border-color:var(--finger);}
+.filter-btn.f-contacto.active{background:var(--contacto);border-color:var(--contacto);}
+.filter-btn.f-rbus.active{background:var(--rbus);border-color:var(--rbus);}
+.filter-btn.f-rpie.active{background:var(--rpie);border-color:var(--rpie);}
 .filter-btn.DC4.active{background:var(--DC4);border-color:var(--DC4);}
 .filter-btn.DD8.active{background:var(--DD8);border-color:var(--DD8);}
 .filter-btn.EJU.active{background:var(--EJU);border-color:var(--EJU);}
@@ -91,473 +93,417 @@ body::before{
 .filter-btn.EXS.active{background:var(--EXS);border-color:var(--EXS);}
 .filter-btn.RYR.active{background:var(--RYR);border-color:var(--RYR);}
 .filter-btn.EWG.active{background:var(--EWG);border-color:var(--EWG);color:#020818;}
+.filter-btn.h-all.active{background:#00f5d4;border-color:#00f5d4;}
 
-/* ── FLIGHT CARD ── */
-.flight-card{
+.count-label{font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:8px;}
+
+/* FLIGHT CARD — redesigned: stand + ETA + handler front and center */
+.fc{
+  display:grid;
+  grid-template-columns:56px 1fr auto;
+  gap:0 10px;
+  align-items:center;
   background:var(--bg3);
-  border:1px solid rgba(255,255,255,0.06);
-  border-left:3px solid var(--nd);
-  border-radius:8px;padding:10px 12px;
-  margin-bottom:7px;
-  display:grid;grid-template-columns:auto 1fr auto;gap:4px 10px;
-  align-items:start;
+  border:1px solid rgba(255,255,255,0.05);
+  border-left:4px solid var(--nd);
+  border-radius:8px;
+  padding:10px 12px 10px 10px;
+  margin-bottom:6px;
 }
-.flight-card.FINGER{border-left-color:var(--finger);}
-.flight-card.CONTACTO{border-left-color:var(--contacto);}
-.flight-card.REMOTO{border-left-color:var(--remoto);}
+.fc.FINGER     {border-left-color:var(--finger);}
+.fc.CONTACTO   {border-left-color:var(--contacto);}
+.fc.REMOTO_BUS {border-left-color:var(--rbus);}
+.fc.REMOTO_PIE {border-left-color:var(--rpie);}
 
-.fc-cia{font-size:18px;font-weight:900;letter-spacing:1px;line-height:1;}
-.fc-vuelo{font-size:11px;color:var(--sub);letter-spacing:2px;}
-.fc-mid{display:flex;flex-direction:column;gap:2px;}
-.fc-ruta{font-size:13px;font-weight:700;letter-spacing:1px;}
-.fc-details{font-size:10px;color:var(--sub);letter-spacing:1px;}
-.fc-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
-.fc-eta{font-size:16px;font-weight:900;letter-spacing:1px;}
-.fc-badges{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;}
-.badge{font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:4px;text-transform:uppercase;}
-.badge.FINGER{background:rgba(0,245,212,0.15);color:var(--finger);border:1px solid rgba(0,245,212,0.3);}
-.badge.CONTACTO{background:rgba(76,201,240,0.15);color:var(--contacto);border:1px solid rgba(76,201,240,0.3);}
-.badge.REMOTO{background:rgba(247,37,133,0.15);color:var(--remoto);border:1px solid rgba(247,37,133,0.3);}
-.badge.HANDLER{background:rgba(255,255,255,0.06);color:var(--sub);border:1px solid rgba(255,255,255,0.1);}
-.fc-stand{font-size:10px;color:var(--muted);letter-spacing:1px;}
-.fc-mat{font-size:9px;color:var(--dimmed);letter-spacing:1px;margin-top:1px;}
+/* LEFT: stand big */
+.fc-stand-block{text-align:center;}
+.fc-stand{font-size:22px;font-weight:900;letter-spacing:1px;line-height:1;}
+.fc-cinta{font-size:9px;color:var(--muted);letter-spacing:1px;margin-top:1px;}
 
-/* ── HANDLER CARD ── */
-.handler-card{
-  border-radius:10px;padding:14px 16px;margin-bottom:10px;
-  border:1px solid rgba(255,255,255,0.06);
-}
-.hc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-.hc-code{font-size:22px;font-weight:900;letter-spacing:3px;}
-.hc-name{font-size:11px;letter-spacing:2px;color:var(--sub);margin-top:1px;}
-.hc-count{font-size:28px;font-weight:900;text-align:right;line-height:1;}
-.hc-count-label{font-size:9px;color:var(--sub);letter-spacing:2px;text-align:right;}
-.hc-bars{display:flex;gap:6px;margin-top:8px;}
-.hc-bar{flex:1;border-radius:4px;padding:5px 8px;text-align:center;}
-.hc-bar-val{font-size:14px;font-weight:900;}
-.hc-bar-label{font-size:8px;letter-spacing:1px;opacity:0.7;text-transform:uppercase;}
-.hc-zona{font-size:10px;letter-spacing:2px;margin-top:8px;padding:5px 8px;border-radius:5px;background:rgba(0,0,0,0.3);text-transform:uppercase;}
+/* MID: flight info */
+.fc-cia-vuelo{font-size:13px;font-weight:900;letter-spacing:2px;}
+.fc-ruta{font-size:11px;color:var(--sub);letter-spacing:1px;margin-top:1px;}
+.fc-bottom{display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap;}
+.fc-mat{font-size:9px;color:var(--dimmed);letter-spacing:1px;}
+.badge{font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:4px;text-transform:uppercase;white-space:nowrap;}
+.badge.FINGER    {background:rgba(0,245,212,0.12);color:var(--finger);border:1px solid rgba(0,245,212,0.25);}
+.badge.CONTACTO  {background:rgba(76,201,240,0.12);color:var(--contacto);border:1px solid rgba(76,201,240,0.25);}
+.badge.REMOTO_BUS{background:rgba(248,150,30,0.12);color:var(--rbus);border:1px solid rgba(248,150,30,0.25);}
+.badge.REMOTO_PIE{background:rgba(247,37,133,0.12);color:var(--rpie);border:1px solid rgba(247,37,133,0.25);}
+.badge.HANDLER   {background:rgba(255,255,255,0.05);color:var(--sub);border:1px solid rgba(255,255,255,0.1);}
 
-/* ── ZONA / GUIA ── */
-.zona-card{border-radius:10px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.06);}
-.zona-title{font-size:13px;font-weight:900;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
-.zona-desc{font-size:11px;color:var(--sub);letter-spacing:1px;line-height:1.5;margin-bottom:8px;}
-.zona-items{display:flex;flex-direction:column;gap:5px;}
-.zona-item{display:flex;gap:8px;align-items:flex-start;}
-.zona-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px;}
-.zona-text{font-size:10px;color:var(--sub);letter-spacing:1px;line-height:1.4;}
+/* RIGHT: ETA + handler dot */
+.fc-right{text-align:right;}
+.fc-eta{font-size:20px;font-weight:900;letter-spacing:1px;line-height:1;}
+.fc-handler-name{font-size:8px;color:var(--muted);letter-spacing:1px;margin-top:3px;}
 
-.section-label{font-size:9px;letter-spacing:5px;color:var(--teal);text-transform:uppercase;margin:16px 0 8px;opacity:0.6;}
-.count-label{font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:10px;}
-.fade-in{animation:fadeSlide 0.25s ease;}
-@keyframes fadeSlide{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+/* HANDLER CARDS */
+.hcard{border-radius:10px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.06);}
+.hcard-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
+.hcard-code{font-size:24px;font-weight:900;letter-spacing:3px;}
+.hcard-name{font-size:10px;color:var(--sub);letter-spacing:2px;margin-top:2px;}
+.hcard-total{text-align:right;}
+.hcard-n{font-size:30px;font-weight:900;line-height:1;}
+.hcard-nlabel{font-size:9px;color:var(--muted);letter-spacing:2px;}
+.hcard-bars{display:flex;gap:6px;}
+.hbar{flex:1;border-radius:6px;padding:6px 8px;text-align:center;border:1px solid transparent;}
+.hbar-n{font-size:16px;font-weight:900;}
+.hbar-l{font-size:8px;letter-spacing:1px;text-transform:uppercase;opacity:0.75;margin-top:1px;}
+
+/* GUIA */
+.gcard{border-radius:10px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.06);}
+.gcard-title{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.gitem{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;}
+.gdot{width:8px;height:8px;border-radius:2px;flex-shrink:0;margin-top:3px;}
+.gtext{font-size:10px;color:var(--sub);letter-spacing:1px;line-height:1.5;}
+
+.section-label{font-size:9px;letter-spacing:5px;color:#00f5d4;text-transform:uppercase;margin:14px 0 8px;opacity:0.55;}
+.fade-in{animation:fi 0.22s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-top">
     <div>
       <div class="header-title">◈ PMI OPERATIVA</div>
-      <div class="header-sub">Turno Mañana · 06:00 – 14:00</div>
+      <div class="header-meta">Turno Mañana · 06:00 – 14:00</div>
     </div>
-    <div class="header-date">30 MAR 2026</div>
+    <div class="header-date">30 MAR<br>2026</div>
+  </div>
+  <!-- tipo legend -->
+  <div class="tipo-legend">
+    <div class="tl-item"><div class="tl-dot" style="background:var(--finger)"></div>FINGER</div>
+    <div class="tl-item"><div class="tl-dot" style="background:var(--contacto)"></div>CONTACTO</div>
+    <div class="tl-item"><div class="tl-dot" style="background:var(--rbus)"></div>REMOTO BUS</div>
+    <div class="tl-item"><div class="tl-dot" style="background:var(--rpie)"></div>REMOTO PIE</div>
   </div>
   <div class="tabs">
-    <button class="tab active" onclick="showPanel('vuelos',this)">
-      <span class="tab-icon">✈</span>VUELOS
-    </button>
-    <button class="tab" onclick="showPanel('handlers',this)">
-      <span class="tab-icon">⬡</span>HANDLERS
-    </button>
-    <button class="tab" onclick="showPanel('zonas',this)">
-      <span class="tab-icon">🗺</span>ZONAS
-    </button>
-    <button class="tab" onclick="showPanel('guia',this)">
-      <span class="tab-icon">📋</span>GUÍA
-    </button>
+    <button class="tab active" onclick="showPanel('vuelos',this)"><span class="tab-icon">✈</span>VUELOS</button>
+    <button class="tab" onclick="showPanel('handlers',this)"><span class="tab-icon">⬡</span>HANDLERS</button>
+    <button class="tab" onclick="showPanel('guia',this)"><span class="tab-icon">📋</span>GUÍA</button>
   </div>
 </div>
 
-<!-- CONTENT -->
 <div class="content">
 
-  <!-- ══ PANEL: VUELOS ══ -->
+  <!-- VUELOS -->
   <div id="panel-vuelos" class="panel active">
-    <div class="filter-row" id="tipo-filters">
-      <button class="filter-btn all active" onclick="filterTipo('ALL',this)">Todos</button>
-      <button class="filter-btn finger" onclick="filterTipo('FINGER',this)">🛬 Finger</button>
-      <button class="filter-btn contacto" onclick="filterTipo('CONTACTO',this)">✈ Contacto</button>
-      <button class="filter-btn remoto" onclick="filterTipo('REMOTO',this)">🚌 Remoto</button>
+    <div class="filter-row">
+      <button class="filter-btn f-all active" onclick="fTipo('ALL',this)">Todos</button>
+      <button class="filter-btn f-finger"  onclick="fTipo('FINGER',this)">🛬 Finger</button>
+      <button class="filter-btn f-contacto" onclick="fTipo('CONTACTO',this)">✈ Contacto</button>
+      <button class="filter-btn f-rbus"    onclick="fTipo('REMOTO_BUS',this)">🚌 Rem. Bus</button>
+      <button class="filter-btn f-rpie"    onclick="fTipo('REMOTO_PIE',this)">🚶 Rem. Pie</button>
     </div>
-    <div class="filter-row" id="handler-filters">
-      <button class="filter-btn all active" onclick="filterHandler('ALL',this)">Todos</button>
-      <button class="filter-btn DC4" onclick="filterHandler('DC4',this)">DC4</button>
-      <button class="filter-btn DD8" onclick="filterHandler('DD8',this)">DD8</button>
-      <button class="filter-btn EJU" onclick="filterHandler('EJU',this)">EJU</button>
-      <button class="filter-btn EWG" onclick="filterHandler('EWG',this)">EWG</button>
-      <button class="filter-btn HU3" onclick="filterHandler('HU3',this)">HU3</button>
-      <button class="filter-btn HS1" onclick="filterHandler('HS1',this)">HS1</button>
-      <button class="filter-btn RYR" onclick="filterHandler('RYR',this)">RYR</button>
-      <button class="filter-btn EXS" onclick="filterHandler('EXS',this)">EXS</button>
+    <div class="filter-row">
+      <button class="filter-btn h-all active" onclick="fHandler('ALL',this)">Todos</button>
+      <button class="filter-btn DC4" onclick="fHandler('DC4',this)">DC4</button>
+      <button class="filter-btn DD8" onclick="fHandler('DD8',this)">DD8</button>
+      <button class="filter-btn EJU" onclick="fHandler('EJU',this)">EJU</button>
+      <button class="filter-btn EWG" onclick="fHandler('EWG',this)">EWG</button>
+      <button class="filter-btn HU3" onclick="fHandler('HU3',this)">HU3</button>
+      <button class="filter-btn HS1" onclick="fHandler('HS1',this)">HS1</button>
+      <button class="filter-btn RYR" onclick="fHandler('RYR',this)">RYR</button>
+      <button class="filter-btn EXS" onclick="fHandler('EXS',this)">EXS</button>
     </div>
-    <div class="count-label" id="count-label"></div>
+    <div class="count-label" id="count-lbl"></div>
     <div id="flight-list"></div>
   </div>
 
-  <!-- ══ PANEL: HANDLERS ══ -->
+  <!-- HANDLERS -->
   <div id="panel-handlers" class="panel">
     <div id="handler-list"></div>
   </div>
 
-  <!-- ══ PANEL: ZONAS ══ -->
-  <div id="panel-zonas" class="panel">
-    <div class="section-label">◈ Mapa de módulos PMI</div>
-
-    <div class="zona-card" style="border-color:rgba(0,245,212,0.2);background:rgba(0,245,212,0.04);">
-      <div class="zona-title" style="color:var(--teal)">🛬 FINGER · B/C</div>
-      <div class="zona-desc">Acceso directo por pasarela. Desplazamiento mínimo. Operativa más ágil.</div>
-      <div class="zona-items">
-        <div class="zona-item"><div class="zona-dot" style="background:var(--teal)"></div><div class="zona-text">Stands 10 / 12 / 14 / 16 / 18 — zona B/C</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--teal)"></div><div class="zona-text">Priorizar secuencias ajustadas y rotaciones rápidas</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--teal)"></div><div class="zona-text">Handlers frecuentes: EJU, EXS, HU3, RYR</div></div>
-      </div>
-    </div>
-
-    <div class="zona-card" style="border-color:rgba(76,201,240,0.2);background:rgba(76,201,240,0.04);">
-      <div class="zona-title" style="color:var(--contacto)">✈ CONTACTO · A/C/D</div>
-      <div class="zona-desc">Stand de plataforma con acceso directo. Operativa estándar. Buffer normal.</div>
-      <div class="zona-items">
-        <div class="zona-item"><div class="zona-dot" style="background:var(--contacto)"></div><div class="zona-text">Stands 38–72 — módulos A, C, D</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--contacto)"></div><div class="zona-text">Operativa normal de plataforma</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--contacto)"></div><div class="zona-text">Handlers frecuentes: EWG, RYR, HS1, DC4</div></div>
-      </div>
-    </div>
-
-    <div class="zona-card" style="border-color:rgba(247,37,133,0.2);background:rgba(247,37,133,0.04);">
-      <div class="zona-title" style="color:var(--remoto)">🚌 REMOTO · R-xx / Bus</div>
-      <div class="zona-desc">Posición remota de plataforma. Posible bus. Mayor tiempo y desplazamiento.</div>
-      <div class="zona-items">
-        <div class="zona-item"><div class="zona-dot" style="background:var(--remoto)"></div><div class="zona-text">Stands 34B / 84–114 y zonas R-xx AENA</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--remoto)"></div><div class="zona-text">Añadir colchón de tiempo y validar antes T-60</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--remoto)"></div><div class="zona-text">Handlers frecuentes: DC4, DD8, HU3</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--remoto)"></div><div class="zona-text">Stand con letra (ej. 34B) — confirmar posición exacta</div></div>
-      </div>
-    </div>
-
-    <div class="section-label">◈ Tendencia por handler</div>
-    <div id="zona-handler-list"></div>
-  </div>
-
-  <!-- ══ PANEL: GUÍA ══ -->
+  <!-- GUÍA -->
   <div id="panel-guia" class="panel">
-    <div class="section-label">◈ Referencia operativa rápida</div>
+    <div class="section-label">◈ Tipos de posición</div>
 
-    <div class="zona-card" style="border-color:rgba(0,245,212,0.15);">
-      <div class="zona-title" style="color:var(--teal);font-size:11px;">STANDS · CLASIFICACIÓN</div>
-      <div class="zona-items" style="margin-top:4px;">
-        <div class="zona-item"><div class="zona-dot" style="background:var(--teal)"></div><div class="zona-text"><strong style="color:var(--teal)">10/12/14/16/18</strong> → FINGER · Puerta comercial B/C</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--contacto)"></div><div class="zona-text"><strong style="color:var(--contacto)">38–72</strong> → CONTACTO · Stand plataforma A/C/D</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--remoto)"></div><div class="zona-text"><strong style="color:var(--remoto)">34B / 84–114</strong> → REMOTO · Prever bus</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--remoto)"></div><div class="zona-text"><strong style="color:var(--remoto)">R-xx</strong> → REMOTO · Referencia física AENA</div></div>
-      </div>
+    <div class="gcard" style="border-color:rgba(0,245,212,0.2);">
+      <div class="gcard-title" style="color:var(--finger)">🛬 FINGER — Pasarela directa</div>
+      <div class="gitem"><div class="gdot" style="background:var(--finger)"></div><div class="gtext">El pasajero desembarca directamente por pasarela a la terminal</div></div>
+      <div class="gitem"><div class="gdot" style="background:var(--finger)"></div><div class="gtext">Stands 10 · 12 · 14 · 16 · 18 · 20 · 22 · 24 · 26 · 28</div></div>
+      <div class="gitem"><div class="gdot" style="background:var(--finger)"></div><div class="gtext">Operativa más ágil — priorizar secuencias ajustadas</div></div>
     </div>
 
-    <div class="zona-card" style="border-color:rgba(255,214,10,0.15);">
-      <div class="zona-title" style="color:var(--yellow);font-size:11px;">DESPLAZAMIENTOS · TIEMPOS</div>
-      <div class="zona-items" style="margin-top:4px;">
-        <div class="zona-item"><div class="zona-dot" style="background:var(--teal)"></div><div class="zona-text"><strong style="color:var(--teal)">FINGER</strong> → Desplazamiento corto / acceso directo. Priorizar secuencias ajustadas.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--contacto)"></div><div class="zona-text"><strong style="color:var(--contacto)">CONTACTO</strong> → Operativa normal de plataforma. Buffer estándar.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--remoto)"></div><div class="zona-text"><strong style="color:var(--remoto)">REMOTO</strong> → Mayor desplazamiento / posible bus. Añadir colchón y validar T-60.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--orange)"></div><div class="zona-text"><strong style="color:var(--orange)">Cambio módulo A↔C/D</strong> → Incrementa desplazamiento interno. Agrupar tareas por zona.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--purple)"></div><div class="zona-text"><strong style="color:var(--purple)">Stand con letra (34B)</strong> → Atención extra. Confirmar posición y acceso.</div></div>
-      </div>
+    <div class="gcard" style="border-color:rgba(76,201,240,0.2);">
+      <div class="gcard-title" style="color:var(--contacto)">✈ CONTACTO — Plataforma sin finger</div>
+      <div class="gitem"><div class="gdot" style="background:var(--contacto)"></div><div class="gtext">El avión está en contacto con el edificio pero sin pasarela — escaleras + camina</div></div>
+      <div class="gitem"><div class="gdot" style="background:var(--contacto)"></div><div class="gtext">Stands 29–98 (zonas A/C/D) — plataforma sin pasarela</div></div>
+      <div class="gitem"><div class="gdot" style="background:var(--contacto)"></div><div class="gtext">Operativa estándar — buffer normal</div></div>
     </div>
 
-    <div class="zona-card" style="border-color:rgba(247,37,133,0.15);">
-      <div class="zona-title" style="color:var(--pink);font-size:11px;">RECOMENDACIÓN POR HANDLER</div>
-      <div class="zona-items" style="margin-top:4px;">
-        <div class="zona-item"><div class="zona-dot" style="background:var(--DC4)"></div><div class="zona-text"><strong style="color:var(--DC4)">DC4 GroundForce</strong> → Tendencia REMOTO. Planifica bus y colchón.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--DD8)"></div><div class="zona-text"><strong style="color:var(--DD8)">DD8 South Europe</strong> → Tendencia REMOTO. Planifica bus y colchón.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--EJU)"></div><div class="zona-text"><strong style="color:var(--EJU)">EJU easyJet</strong> → Tendencia B/C. Operativa estable.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--EWG)"></div><div class="zona-text"><strong style="color:var(--EWG)">EWG Eurowings</strong> → Tendencia CONTACTO. Operativa directa.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--EXS)"></div><div class="zona-text"><strong style="color:var(--EXS)">EXS Jet2</strong> → Tendencia B/C. Operativa estable.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--HS1)"></div><div class="zona-text"><strong style="color:var(--HS1)">HS1 Swissport</strong> → Tendencia CONTACTO. Operativa directa.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--HU3)"></div><div class="zona-text"><strong style="color:var(--HU3)">HU3 Menzies</strong> → Tendencia REMOTO. Planifica bus y colchón.</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--RYR)"></div><div class="zona-text"><strong style="color:var(--RYR)">RYR Azul Handling</strong> → Tendencia CONTACTO. Operativa directa.</div></div>
-      </div>
+    <div class="gcard" style="border-color:rgba(248,150,30,0.2);">
+      <div class="gcard-title" style="color:var(--rbus)">🚌 REMOTO BUS — Posición remota con autobús</div>
+      <div class="gitem"><div class="gdot" style="background:var(--rbus)"></div><div class="gtext">El avión está alejado — se necesita autobús para trasladar pasajeros</div></div>
+      <div class="gitem"><div class="gdot" style="background:var(--rbus)"></div><div class="gtext">Stands ≥100 · 34B (stands con letra) · R-xx por confirmar</div></div>
+      <div class="gitem"><div class="gdot" style="background:var(--rbus)"></div><div class="gtext">Añadir colchón de tiempo — validar posición antes T-60</div></div>
+      <div class="gitem"><div class="gdot" style="background:var(--rbus)"></div><div class="gtext">Stand con letra (34B) → confirmar posición exacta</div></div>
     </div>
 
-    <div class="zona-card" style="border-color:rgba(76,201,240,0.15);">
-      <div class="zona-title" style="color:var(--blue);font-size:11px;">MÓDULOS PMI</div>
-      <div class="zona-items" style="margin-top:4px;">
-        <div class="zona-item"><div class="zona-dot" style="background:var(--teal)"></div><div class="zona-text"><strong style="color:var(--teal)">Módulo A</strong> → Bloque lineal norte / finger · A17–A25</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--teal)"></div><div class="zona-text"><strong style="color:var(--teal)">Módulo B</strong> → Conexión central · B31–B37</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--contacto)"></div><div class="zona-text"><strong style="color:var(--contacto)">Módulo C</strong> → Satélite este · C47–C68 · Mixto / alta densidad</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--contacto)"></div><div class="zona-text"><strong style="color:var(--contacto)">Módulo D</strong> → Satélite oeste/sur · D71–D97 · Mixto / remoto cercano</div></div>
-        <div class="zona-item"><div class="zona-dot" style="background:var(--remoto)"></div><div class="zona-text"><strong style="color:var(--remoto)">REMOTO</strong> → Posiciones remotas · Bus / tiempos extra</div></div>
-      </div>
+    <div class="gcard" style="border-color:rgba(247,37,133,0.2);">
+      <div class="gcard-title" style="color:var(--rpie)">🚶 REMOTO PIE — Posición remota a pie</div>
+      <div class="gitem"><div class="gdot" style="background:var(--rpie)"></div><div class="gtext">El avión está en remoto pero los pasajeros caminan directamente — sin bus</div></div>
+      <div class="gitem"><div class="gdot" style="background:var(--rpie)"></div><div class="gtext">Mayor desplazamiento — prever tiempo extra</div></div>
     </div>
+
+    <div class="section-label">◈ Referencia rápida por handler</div>
+    <div id="guia-handler-list"></div>
   </div>
 
-</div><!-- /content -->
+</div>
 
 <script>
-// ── DATA ─────────────────────────────────────────────────────────
-const flights = [
-  {cia:"EWG",vuelo:"6815",origen:"NUE",eta:"06:01",ao:"A32A",handler:"EWG",hname:"Eurowings",mat:"9H-EWF",stand:"38",cinta:"12",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"1342",origen:"BCN",eta:"06:49",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"9H-QAP",stand:"72",cinta:"08",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"6863",origen:"ERF",eta:"06:51",ao:"A319",handler:"EWG",hname:"Eurowings",mat:"9H-EXZ",stand:"66",cinta:"13",tipo:"CONTACTO"},
-  {cia:"CFG",vuelo:"1504",origen:"FRA",eta:"06:55",ao:"A32B",handler:"HS1",hname:"Swissport",mat:"D-ATCC",stand:"62",cinta:"12",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"6809",origen:"PAD",eta:"07:04",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"9H-EUQ",stand:"46",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"6823",origen:"FMO",eta:"07:07",ao:"A319",handler:"EWG",hname:"Eurowings",mat:"9H-EXW",stand:"29",cinta:"16",tipo:"ND"},
-  {cia:"EWG",vuelo:"580",origen:"CGN",eta:"07:17",ao:"A32A",handler:"EWG",hname:"Eurowings",mat:"D-AEWT",stand:"114",cinta:"11",tipo:"REMOTO"},
-  {cia:"VLG",vuelo:"3900",origen:"BCN",eta:"07:21",ao:"A32B",handler:"DD8",hname:"South Europe GS",mat:"EC-NLX",stand:"88",cinta:"09",tipo:"REMOTO"},
-  {cia:"EWG",vuelo:"3590",origen:"HAJ",eta:"07:24",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"9H-EUC",stand:"58",cinta:"13",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"582",origen:"CGN",eta:"07:27",ao:"A32A",handler:"EWG",hname:"Eurowings",mat:"9H-EWD",stand:"56",cinta:"15",tipo:"CONTACTO"},
-  {cia:"TUI",vuelo:"2128",origen:"FRA",eta:"07:32",ao:"B38M",handler:"HS1",hname:"Swissport",mat:"D-AMAE",stand:"94",cinta:"17",tipo:"REMOTO"},
-  {cia:"ANE",vuelo:"2511",origen:"IBZ",eta:"07:45",ao:"AT76",handler:"DC4",hname:"GroundForce",mat:"EC-LRR",stand:"36",cinta:"16",tipo:"ND"},
-  {cia:"ANE",vuelo:"2481",origen:"MAH",eta:"07:46",ao:"AT76",handler:"DC4",hname:"GroundForce",mat:"EC-LQV",stand:"34B",cinta:"18",tipo:"REMOTO"},
-  {cia:"EWG",vuelo:"2580",origen:"STR",eta:"07:46",ao:"A32A",handler:"EWG",hname:"Eurowings",mat:"9H-EWE",stand:"68",cinta:"14",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"2736",origen:"FKB",eta:"07:46",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"EI-DWC",stand:"48",cinta:"08",tipo:"CONTACTO"},
-  {cia:"LGL",vuelo:"601",origen:"LUX",eta:"07:52",ao:"738W",handler:"DC4",hname:"GroundForce",mat:"LX-LGV",stand:"64",cinta:"15",tipo:"CONTACTO"},
-  {cia:"MBU",vuelo:"6526",origen:"LEJ",eta:"07:56",ao:"A20N",handler:"HS1",hname:"Swissport",mat:"ES-MBE",stand:"52",cinta:"17",tipo:"CONTACTO"},
-  {cia:"VLG",vuelo:"3902",origen:"BCN",eta:"07:56",ao:"A32B",handler:"DD8",hname:"South Europe GS",mat:"EC-MHS",stand:"92",cinta:"13",tipo:"REMOTO"},
-  {cia:"EWG",vuelo:"9572",origen:"DUS",eta:"08:00",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"D-ABZI",stand:"42",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"8580",origen:"BER",eta:"08:04",ao:"A321",handler:"EWG",hname:"Eurowings",mat:"D-AIDU",stand:"72",cinta:"16",tipo:"CONTACTO"},
-  {cia:"TRA",vuelo:"5623",origen:"AMS",eta:"08:07",ao:"738W",handler:"HU3",hname:"Menzies",mat:"PH-HXE",stand:"54",cinta:"12",tipo:"CONTACTO"},
-  {cia:"TUI",vuelo:"2312",origen:"DUS",eta:"08:09",ao:"B38M",handler:"HS1",hname:"Swissport",mat:"D-AMAD",stand:"84",cinta:"10",tipo:"REMOTO"},
-  {cia:"EWG",vuelo:"2582",origen:"STR",eta:"08:11",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"9H-EUV",stand:"50",cinta:"11",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"6218",origen:"NRN",eta:"08:19",ao:"B38M",handler:"RYR",hname:"Azul Handling",mat:"EI-HGM",stand:"46",cinta:"09",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"104",origen:"VIE",eta:"08:22",ao:"A320",handler:"RYR",hname:"Azul Handling",mat:"9H-LMJ",stand:"40",cinta:"08",tipo:"CONTACTO"},
-  {cia:"SWT",vuelo:"7770",origen:"IBZ",eta:"08:22",ao:"AT75",handler:"DC4",hname:"GroundForce",mat:"EC-KUL",stand:"32",cinta:"16",tipo:"ND"},
-  {cia:"EWG",vuelo:"7580",origen:"HAM",eta:"08:24",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"LY-WIL",stand:"60",cinta:"11",tipo:"CONTACTO"},
-  {cia:"SWR",vuelo:"2152",origen:"ZRH",eta:"08:30",ao:"BCS3",handler:"DC4",hname:"GroundForce",mat:"YL-AAQ",stand:"98",cinta:"16",tipo:"REMOTO"},
-  {cia:"IBS",vuelo:"1651",origen:"MAD",eta:"08:32",ao:"A21N",handler:"DD8",hname:"South Europe GS",mat:"EC-OBY",stand:"86",cinta:"15",tipo:"REMOTO"},
-  {cia:"VLG",vuelo:"3983",origen:"SCQ",eta:"08:32",ao:"A320",handler:"DD8",hname:"South Europe GS",mat:"EC-OFX",stand:"96",cinta:"13",tipo:"REMOTO"},
-  {cia:"RYR",vuelo:"7214",origen:"VLC",eta:"08:35",ao:"A320",handler:"RYR",hname:"Azul Handling",mat:"9H-LOU",stand:"38",cinta:"07",tipo:"CONTACTO"},
-  {cia:"SAS",vuelo:"585",origen:"CPH",eta:"08:38",ao:"A20N",handler:"DC4",hname:"GroundForce",mat:"EI-SCH",stand:"44",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"9576",origen:"DUS",eta:"08:39",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"9H-EUX",stand:"62",cinta:"12",tipo:"CONTACTO"},
-  {cia:"TUI",vuelo:"2714",origen:"STR",eta:"08:50",ao:"B38M",handler:"HS1",hname:"Swissport",mat:"D-AMAY",stand:"68",cinta:"17",tipo:"CONTACTO"},
-  {cia:"EJU",vuelo:"4773",origen:"NTE",eta:"08:52",ao:"A32A",handler:"EJU",hname:"easyJet",mat:"OE-INH",stand:"56",cinta:"13",tipo:"CONTACTO"},
-  {cia:"EZY",vuelo:"2709",origen:"BRS",eta:"08:54",ao:"A32A",handler:"EJU",hname:"easyJet",mat:"G-EZPD",stand:"18",cinta:"11",tipo:"FINGER"},
-  {cia:"RYR",vuelo:"4215",origen:"TLS",eta:"09:03",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"EI-EKT",stand:"48",cinta:"07",tipo:"CONTACTO"},
-  {cia:"ANE",vuelo:"2501",origen:"MAH",eta:"09:06",ao:"AT76",handler:"DC4",hname:"GroundForce",mat:"EC-OOP",stand:"34B",cinta:"18",tipo:"REMOTO"},
-  {cia:"RYR",vuelo:"943",origen:"DUB",eta:"09:06",ao:"B38M",handler:"RYR",hname:"Azul Handling",mat:"9H-VVF",stand:"—",cinta:"07",tipo:"ND"},
-  {cia:"EXS",vuelo:"601",origen:"EMA",eta:"09:09",ao:"738W",handler:"EXS",hname:"Jet2",mat:"G-DRTK",stand:"14",cinta:"12",tipo:"FINGER"},
-  {cia:"VLG",vuelo:"3904",origen:"BCN",eta:"09:09",ao:"A32A",handler:"DD8",hname:"South Europe GS",mat:"EC-OKI",stand:"94",cinta:"12",tipo:"REMOTO"},
-  {cia:"IBS",vuelo:"1655",origen:"MAD",eta:"09:11",ao:"A21N",handler:"DD8",hname:"South Europe GS",mat:"EC-NJI",stand:"88",cinta:"14",tipo:"REMOTO"},
-  {cia:"EZY",vuelo:"2329",origen:"LTN",eta:"09:13",ao:"A32A",handler:"EJU",hname:"easyJet",mat:"G-EZWX",stand:"12",cinta:"09",tipo:"FINGER"},
-  {cia:"TUI",vuelo:"2314",origen:"HAJ",eta:"09:19",ao:"738W",handler:"HS1",hname:"Swissport",mat:"D-ABKN",stand:"72",cinta:"17",tipo:"CONTACTO"},
-  {cia:"AEA",vuelo:"6007",origen:"BCN",eta:"09:21",ao:"738W",handler:"DC4",hname:"GroundForce",mat:"EC-LPQ",stand:"92",cinta:"10",tipo:"REMOTO"},
-  {cia:"ANE",vuelo:"2513",origen:"IBZ",eta:"09:22",ao:"CRJX",handler:"DC4",hname:"GroundForce",mat:"EC-MLC",stand:"36",cinta:"16",tipo:"ND"},
-  {cia:"EZY",vuelo:"3359",origen:"LPL",eta:"09:23",ao:"A20N",handler:"EJU",hname:"easyJet",mat:"G-UZHK",stand:"16",cinta:"13",tipo:"FINGER"},
-  {cia:"EWG",vuelo:"7582",origen:"HAM",eta:"09:33",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"LY-CAP",stand:"60",cinta:"14",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"226",origen:"BER",eta:"09:37",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"9H-QBF",stand:"52",cinta:"08",tipo:"CONTACTO"},
-  {cia:"SWT",vuelo:"7881",origen:"IBZ",eta:"09:37",ao:"AT75",handler:"DC4",hname:"GroundForce",mat:"EC-KKQ",stand:"32",cinta:"18",tipo:"ND"},
-  {cia:"EZY",vuelo:"5731",origen:"SEN",eta:"09:38",ao:"A20N",handler:"EJU",hname:"easyJet",mat:"G-UZHM",stand:"10",cinta:"15",tipo:"FINGER"},
-  {cia:"RYR",vuelo:"2061",origen:"MAD",eta:"09:40",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"9H-QAL",stand:"107",cinta:"07",tipo:"REMOTO"},
-  {cia:"AEA",vuelo:"6031",origen:"MAD",eta:"09:44",ao:"738W",handler:"DC4",hname:"GroundForce",mat:"EC-MXM",stand:"86",cinta:"11",tipo:"REMOTO"},
-  {cia:"EFW",vuelo:"2670",origen:"LGW",eta:"09:46",ao:"A320",handler:"HU3",hname:"Menzies",mat:"G-EUUV",stand:"—",cinta:"10",tipo:"ND"},
-  {cia:"RYR",vuelo:"351",origen:"SVQ",eta:"09:48",ao:"B38M",handler:"RYR",hname:"Azul Handling",mat:"EI-HLB",stand:"40",cinta:"08",tipo:"CONTACTO"},
-  {cia:"TVF",vuelo:"4710",origen:"ORY",eta:"09:50",ao:"738W",handler:"HU3",hname:"Menzies",mat:"F-HUYG",stand:"46",cinta:"11",tipo:"CONTACTO"},
-  {cia:"VLG",vuelo:"3906",origen:"BCN",eta:"09:50",ao:"A32A",handler:"DD8",hname:"South Europe GS",mat:"EC-OKJ",stand:"96",cinta:"09",tipo:"REMOTO"},
-  {cia:"AEA",vuelo:"4008",origen:"VLC",eta:"09:51",ao:"738W",handler:"DC4",hname:"GroundForce",mat:"EC-NZN",stand:"84",cinta:"13",tipo:"REMOTO"},
-  {cia:"AEA",vuelo:"4025",origen:"ALC",eta:"09:52",ao:"738W",handler:"DC4",hname:"GroundForce",mat:"EC-LXV",stand:"98",cinta:"15",tipo:"REMOTO"},
-  {cia:"SAS",vuelo:"1809",origen:"ARN",eta:"09:55",ao:"A20N",handler:"DC4",hname:"GroundForce",mat:"EI-SIR",stand:"50",cinta:"21",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"6583",origen:"TSF",eta:"09:57",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"EI-DWW",stand:"38",cinta:"07",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"7212",origen:"CGN",eta:"09:57",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"EI-EKC",stand:"48",cinta:"08",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"8586",origen:"BER",eta:"10:01",ao:"A32A",handler:"EWG",hname:"Eurowings",mat:"D-AEWW",stand:"62",cinta:"16",tipo:"CONTACTO"},
-  {cia:"EJU",vuelo:"7282",origen:"GVA",eta:"10:09",ao:"A320",handler:"EJU",hname:"easyJet",mat:"OE-IJE",stand:"54",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EXS",vuelo:"717",origen:"EDI",eta:"10:10",ao:"738W",handler:"EXS",hname:"Jet2",mat:"G-JZBM",stand:"—",cinta:"12",tipo:"ND"},
-  {cia:"EWG",vuelo:"6895",origen:"DUS",eta:"12:14",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"9H-EUL",stand:"54",cinta:"13",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"5700",origen:"BGY",eta:"12:17",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"9H-QAV",stand:"42",cinta:"08",tipo:"CONTACTO"},
-  {cia:"VLG",vuelo:"3908",origen:"BCN",eta:"12:19",ao:"A32B",handler:"DD8",hname:"South Europe GS",mat:"EC-MHB",stand:"92",cinta:"11",tipo:"REMOTO"},
-  {cia:"RYR",vuelo:"1954",origen:"BHX",eta:"12:21",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"EI-EGB",stand:"12",cinta:"08",tipo:"FINGER"},
-  {cia:"CFG",vuelo:"1502",origen:"FRA",eta:"12:22",ao:"A320",handler:"HS1",hname:"Swissport",mat:"D-ASGE",stand:"50",cinta:"15",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"4124",origen:"NUE",eta:"12:29",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"9H-EUR",stand:"68",cinta:"14",tipo:"CONTACTO"},
-  {cia:"DAH",vuelo:"2000",origen:"ALG",eta:"12:37",ao:"AT75",handler:"DC4",hname:"GroundForce",mat:"7T-VUP",stand:"104",cinta:"11",tipo:"REMOTO"},
-  {cia:"RYR",vuelo:"3110",origen:"BUD",eta:"12:39",ao:"B38M",handler:"RYR",hname:"Azul Handling",mat:"SP-RZS",stand:"48",cinta:"07",tipo:"CONTACTO"},
-  {cia:"AEA",vuelo:"6037",origen:"BCN",eta:"12:45",ao:"738W",handler:"DC4",hname:"GroundForce",mat:"EC-LPQ",stand:"88",cinta:"12",tipo:"REMOTO"},
-  {cia:"EWG",vuelo:"6819",origen:"SCN",eta:"12:48",ao:"A319",handler:"EWG",hname:"Eurowings",mat:"9H-EXZ",stand:"56",cinta:"16",tipo:"CONTACTO"},
-  {cia:"IBS",vuelo:"1659",origen:"MAD",eta:"12:48",ao:"A21N",handler:"DD8",hname:"South Europe GS",mat:"EC-OBY",stand:"86",cinta:"10",tipo:"REMOTO"},
-  {cia:"EWG",vuelo:"6829",origen:"BRE",eta:"12:50",ao:"A32A",handler:"EWG",hname:"Eurowings",mat:"9H-EWF",stand:"52",cinta:"15",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"8582",origen:"BER",eta:"12:50",ao:"A32A",handler:"EWG",hname:"Eurowings",mat:"D-AEWL",stand:"38",cinta:"13",tipo:"CONTACTO"},
-  {cia:"EJU",vuelo:"7254",origen:"BHX",eta:"12:51",ao:"A32A",handler:"EJU",hname:"easyJet",mat:"OE-IVD",stand:"102",cinta:"14",tipo:"REMOTO"},
-  {cia:"CFG",vuelo:"1514",origen:"DUS",eta:"12:54",ao:"A32B",handler:"HS1",hname:"Swissport",mat:"D-ATCG",stand:"64",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"2584",origen:"STR",eta:"12:55",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"9H-AMM",stand:"60",cinta:"11",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"2889",origen:"BCN",eta:"12:55",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"9H-QCA",stand:"72",cinta:"07",tipo:"CONTACTO"},
-  {cia:"TRA",vuelo:"6511",origen:"EIN",eta:"12:58",ao:"738W",handler:"HU3",hname:"Menzies",mat:"PH-HZG",stand:"106",cinta:"17",tipo:"REMOTO"},
-  {cia:"EJU",vuelo:"3749",origen:"MXP",eta:"12:59",ao:"A319",handler:"EJU",hname:"easyJet",mat:"OE-LQS",stand:"107",cinta:"17",tipo:"REMOTO"},
-  {cia:"RYR",vuelo:"29",origen:"STN",eta:"13:01",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"EI-DWM",stand:"10",cinta:"08",tipo:"FINGER"},
-  {cia:"EWG",vuelo:"6885",origen:"MUC",eta:"13:02",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"9H-EUQ",stand:"62",cinta:"19",tipo:"CONTACTO"},
-  {cia:"ANE",vuelo:"2485",origen:"MAH",eta:"13:04",ao:"AT76",handler:"DC4",hname:"GroundForce",mat:"EC-LRR",stand:"34B",cinta:"16",tipo:"REMOTO"},
-  {cia:"EJU",vuelo:"7334",origen:"BER",eta:"13:04",ao:"A32A",handler:"EJU",hname:"easyJet",mat:"OE-IZF",stand:"58",cinta:"18",tipo:"CONTACTO"},
-  {cia:"BAW",vuelo:"468",origen:"LHR",eta:"13:10",ao:"A320",handler:"HU3",hname:"Menzies",mat:"G-EUYB",stand:"16",cinta:"12",tipo:"FINGER"},
-  {cia:"CSW",vuelo:"100",origen:"ZRH",eta:"13:12",ao:"A320",handler:"HU3",hname:"Menzies",mat:"HB-JOK",stand:"96",cinta:"15",tipo:"REMOTO"},
-  {cia:"RYR",vuelo:"4512",origen:"KRK",eta:"13:12",ao:"B38M",handler:"RYR",hname:"Azul Handling",mat:"SP-RZY",stand:"40",cinta:"07",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"6805",origen:"FKB",eta:"13:17",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"9H-EUC",stand:"50",cinta:"11",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"7831",origen:"CRL",eta:"13:17",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"EI-EFI",stand:"68",cinta:"08",tipo:"CONTACTO"},
-  {cia:"EZY",vuelo:"3011",origen:"BFS",eta:"13:25",ao:"A32A",handler:"EJU",hname:"easyJet",mat:"G-EZGX",stand:"18",cinta:"10",tipo:"FINGER"},
-  {cia:"RYR",vuelo:"2881",origen:"CPH",eta:"13:25",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"EI-DYL",stand:"46",cinta:"09",tipo:"CONTACTO"},
-  {cia:"IBB",vuelo:"5106",origen:"LPA",eta:"13:28",ao:"E295",handler:"HU3",hname:"Menzies",mat:"EC-OKB",stand:"94",cinta:"13",tipo:"REMOTO"},
-  {cia:"TVF",vuelo:"4714",origen:"ORY",eta:"13:29",ao:"A20N",handler:"HU3",hname:"Menzies",mat:"F-HXSJ",stand:"102",cinta:"18",tipo:"REMOTO"},
-  {cia:"EJU",vuelo:"7364",origen:"BHD",eta:"13:30",ao:"A32A",handler:"EJU",hname:"easyJet",mat:"OE-IJH",stand:"101",cinta:"09",tipo:"REMOTO"},
-  {cia:"VLG",vuelo:"3989",origen:"ZAZ",eta:"13:32",ao:"A32A",handler:"DD8",hname:"South Europe GS",mat:"EC-OKJ",stand:"98",cinta:"12",tipo:"REMOTO"},
-  {cia:"RYR",vuelo:"6567",origen:"ALC",eta:"13:45",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"EI-EGC",stand:"48",cinta:"08",tipo:"CONTACTO"},
-  {cia:"EWG",vuelo:"6887",origen:"MUC",eta:"13:48",ao:"A320",handler:"EWG",hname:"Eurowings",mat:"9H-EUV",stand:"44",cinta:"11",tipo:"CONTACTO"},
-  {cia:"SWR",vuelo:"2156",origen:"ZRH",eta:"13:48",ao:"BCS3",handler:"DC4",hname:"GroundForce",mat:"YL-BTA",stand:"84",cinta:"17",tipo:"REMOTO"},
-  {cia:"EJU",vuelo:"7887",origen:"AMS",eta:"13:49",ao:"A20N",handler:"EJU",hname:"easyJet",mat:"OE-LSW",stand:"54",cinta:"19",tipo:"CONTACTO"},
-  {cia:"RYR",vuelo:"1103",origen:"MAN",eta:"13:49",ao:"738W",handler:"RYR",hname:"Azul Handling",mat:"EI-DHN",stand:"—",cinta:"08",tipo:"ND"},
-  {cia:"CFE",vuelo:"8483",origen:"LCY",eta:"13:51",ao:"E190",handler:"HU3",hname:"Menzies",mat:"G-LCAH",stand:"12",cinta:"12",tipo:"FINGER"},
-  {cia:"EWG",vuelo:"586",origen:"CGN",eta:"13:54",ao:"A32A",handler:"EWG",hname:"Eurowings",mat:"9H-EWD",stand:"60",cinta:"15",tipo:"CONTACTO"},
-  {cia:"NSZ",vuelo:"5611",origen:"CPH",eta:"13:55",ao:"B38M",handler:"HU3",hname:"Menzies",mat:"SE-RTO",stand:"56",cinta:"12",tipo:"CONTACTO"},
-  {cia:"BAW",vuelo:"494",origen:"LHR",eta:"13:58",ao:"A21N",handler:"HU3",hname:"Menzies",mat:"G-TNEF",stand:"14",cinta:"12",tipo:"FINGER"},
-];
-
-const handlerInfo = {
-  DC4:{name:"GroundForce",      zona:"REMOTO",   color:"#00f5d4"},
-  DD8:{name:"South Europe GS",  zona:"REMOTO",   color:"#f72585"},
-  EJU:{name:"easyJet",          zona:"B/C",      color:"#f8961e"},
-  EWG:{name:"Eurowings",        zona:"CONTACTO", color:"#ffd60a"},
-  EXS:{name:"Jet2",             zona:"B/C",      color:"#b5e48c"},
-  HS1:{name:"Swissport",        zona:"CONTACTO", color:"#b77fff"},
-  HU3:{name:"Menzies",          zona:"REMOTO",   color:"#4cc9f0"},
-  RYR:{name:"Azul Handling",    zona:"CONTACTO", color:"#ff6b6b"},
+const HC = {
+  DC4:{name:"GroundForce",     color:"#00f5d4"},
+  DD8:{name:"South Europe GS", color:"#f72585"},
+  EJU:{name:"easyJet",         color:"#f8961e"},
+  EWG:{name:"Eurowings",       color:"#ffd60a"},
+  EXS:{name:"Jet2",            color:"#b5e48c"},
+  HS1:{name:"Swissport",       color:"#b77fff"},
+  HU3:{name:"Menzies",         color:"#4cc9f0"},
+  RYR:{name:"Azul Handling",   color:"#ff6b6b"},
 };
 
-// ── STATE ─────────────────────────────────────────────────────────
-let filterTipoVal = 'ALL';
-let filterHandlerVal = 'ALL';
+const TIPO_LABEL = {
+  FINGER:"🛬 Finger",
+  CONTACTO:"✈ Contacto",
+  REMOTO_BUS:"🚌 Rem. Bus",
+  REMOTO_PIE:"🚶 Rem. Pie",
+  ND:"—",
+};
 
-// ── RENDER FLIGHTS ────────────────────────────────────────────────
-function renderFlights() {
+const flights = [
+  {cia:"EWG",v:"6815",org:"NUE",eta:"06:01",ao:"A32A",h:"EWG",mat:"9H-EWF",stand:"38",cinta:"12",tipo:"CONTACTO"},
+  {cia:"RYR",v:"1342",org:"BCN",eta:"06:49",ao:"738W",h:"RYR",mat:"9H-QAP",stand:"72",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6863",org:"ERF",eta:"06:51",ao:"A319",h:"EWG",mat:"9H-EXZ",stand:"66",cinta:"13",tipo:"CONTACTO"},
+  {cia:"CFG",v:"1504",org:"FRA",eta:"06:55",ao:"A32B",h:"HS1",mat:"D-ATCC",stand:"62",cinta:"12",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6809",org:"PAD",eta:"07:04",ao:"A320",h:"EWG",mat:"9H-EUQ",stand:"46",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6823",org:"FMO",eta:"07:07",ao:"A319",h:"EWG",mat:"9H-EXW",stand:"29",cinta:"16",tipo:"CONTACTO"},
+  {cia:"EWG",v:"580", org:"CGN",eta:"07:17",ao:"A32A",h:"EWG",mat:"D-AEWT",stand:"114",cinta:"11",tipo:"REMOTO_BUS"},
+  {cia:"VLG",v:"3900",org:"BCN",eta:"07:21",ao:"A32B",h:"DD8",mat:"EC-NLX",stand:"88",cinta:"09",tipo:"CONTACTO"},
+  {cia:"EWG",v:"3590",org:"HAJ",eta:"07:24",ao:"A320",h:"EWG",mat:"9H-EUC",stand:"58",cinta:"13",tipo:"CONTACTO"},
+  {cia:"EWG",v:"582", org:"CGN",eta:"07:27",ao:"A32A",h:"EWG",mat:"9H-EWD",stand:"56",cinta:"15",tipo:"CONTACTO"},
+  {cia:"TUI",v:"2128",org:"FRA",eta:"07:32",ao:"B38M",h:"HS1",mat:"D-AMAE",stand:"94",cinta:"17",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2511",org:"IBZ",eta:"07:45",ao:"AT76",h:"DC4",mat:"EC-LRR",stand:"36",cinta:"16",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2481",org:"MAH",eta:"07:46",ao:"AT76",h:"DC4",mat:"EC-LQV",stand:"34B",cinta:"18",tipo:"REMOTO_BUS"},
+  {cia:"EWG",v:"2580",org:"STR",eta:"07:46",ao:"A32A",h:"EWG",mat:"9H-EWE",stand:"68",cinta:"14",tipo:"CONTACTO"},
+  {cia:"RYR",v:"2736",org:"FKB",eta:"07:46",ao:"738W",h:"RYR",mat:"EI-DWC",stand:"48",cinta:"08",tipo:"CONTACTO"},
+  {cia:"LGL",v:"601", org:"LUX",eta:"07:52",ao:"738W",h:"DC4",mat:"LX-LGV",stand:"64",cinta:"15",tipo:"CONTACTO"},
+  {cia:"MBU",v:"6526",org:"LEJ",eta:"07:56",ao:"A20N",h:"HS1",mat:"ES-MBE",stand:"52",cinta:"17",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3902",org:"BCN",eta:"07:56",ao:"A32B",h:"DD8",mat:"EC-MHS",stand:"92",cinta:"13",tipo:"CONTACTO"},
+  {cia:"EWG",v:"9572",org:"DUS",eta:"08:00",ao:"A320",h:"EWG",mat:"D-ABZI",stand:"42",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EWG",v:"8580",org:"BER",eta:"08:04",ao:"A321",h:"EWG",mat:"D-AIDU",stand:"72",cinta:"16",tipo:"CONTACTO"},
+  {cia:"TRA",v:"5623",org:"AMS",eta:"08:07",ao:"738W",h:"HU3",mat:"PH-HXE",stand:"54",cinta:"12",tipo:"CONTACTO"},
+  {cia:"TUI",v:"2312",org:"DUS",eta:"08:09",ao:"B38M",h:"HS1",mat:"D-AMAD",stand:"84",cinta:"10",tipo:"CONTACTO"},
+  {cia:"EWG",v:"2582",org:"STR",eta:"08:11",ao:"A320",h:"EWG",mat:"9H-EUV",stand:"50",cinta:"11",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6218",org:"NRN",eta:"08:19",ao:"B38M",h:"RYR",mat:"EI-HGM",stand:"46",cinta:"09",tipo:"CONTACTO"},
+  {cia:"RYR",v:"104", org:"VIE",eta:"08:22",ao:"A320",h:"RYR",mat:"9H-LMJ",stand:"40",cinta:"08",tipo:"CONTACTO"},
+  {cia:"SWT",v:"7770",org:"IBZ",eta:"08:22",ao:"AT75",h:"DC4",mat:"EC-KUL",stand:"32",cinta:"16",tipo:"CONTACTO"},
+  {cia:"EWG",v:"7580",org:"HAM",eta:"08:24",ao:"A320",h:"EWG",mat:"LY-WIL",stand:"60",cinta:"11",tipo:"CONTACTO"},
+  {cia:"SWR",v:"2152",org:"ZRH",eta:"08:30",ao:"BCS3",h:"DC4",mat:"YL-AAQ",stand:"98",cinta:"16",tipo:"CONTACTO"},
+  {cia:"IBS",v:"1651",org:"MAD",eta:"08:32",ao:"A21N",h:"DD8",mat:"EC-OBY",stand:"86",cinta:"15",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3983",org:"SCQ",eta:"08:32",ao:"A320",h:"DD8",mat:"EC-OFX",stand:"96",cinta:"13",tipo:"CONTACTO"},
+  {cia:"RYR",v:"7214",org:"VLC",eta:"08:35",ao:"A320",h:"RYR",mat:"9H-LOU",stand:"38",cinta:"07",tipo:"CONTACTO"},
+  {cia:"SAS",v:"585", org:"CPH",eta:"08:38",ao:"A20N",h:"DC4",mat:"EI-SCH",stand:"44",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EWG",v:"9576",org:"DUS",eta:"08:39",ao:"A320",h:"EWG",mat:"9H-EUX",stand:"62",cinta:"12",tipo:"CONTACTO"},
+  {cia:"TUI",v:"2714",org:"STR",eta:"08:50",ao:"B38M",h:"HS1",mat:"D-AMAY",stand:"68",cinta:"17",tipo:"CONTACTO"},
+  {cia:"EJU",v:"4773",org:"NTE",eta:"08:52",ao:"A32A",h:"EJU",mat:"OE-INH",stand:"56",cinta:"13",tipo:"CONTACTO"},
+  {cia:"EZY",v:"2709",org:"BRS",eta:"08:54",ao:"A32A",h:"EJU",mat:"G-EZPD",stand:"18",cinta:"11",tipo:"FINGER"},
+  {cia:"RYR",v:"4215",org:"TLS",eta:"09:03",ao:"738W",h:"RYR",mat:"EI-EKT",stand:"48",cinta:"07",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2501",org:"MAH",eta:"09:06",ao:"AT76",h:"DC4",mat:"EC-OOP",stand:"34B",cinta:"18",tipo:"REMOTO_BUS"},
+  {cia:"RYR",v:"943", org:"DUB",eta:"09:06",ao:"B38M",h:"RYR",mat:"9H-VVF",stand:"—", cinta:"07",tipo:"ND"},
+  {cia:"EXS",v:"601", org:"EMA",eta:"09:09",ao:"738W",h:"EXS",mat:"G-DRTK",stand:"14",cinta:"12",tipo:"FINGER"},
+  {cia:"VLG",v:"3904",org:"BCN",eta:"09:09",ao:"A32A",h:"DD8",mat:"EC-OKI",stand:"94",cinta:"12",tipo:"CONTACTO"},
+  {cia:"IBS",v:"1655",org:"MAD",eta:"09:11",ao:"A21N",h:"DD8",mat:"EC-NJI",stand:"88",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EZY",v:"2329",org:"LTN",eta:"09:13",ao:"A32A",h:"EJU",mat:"G-EZWX",stand:"12",cinta:"09",tipo:"FINGER"},
+  {cia:"TUI",v:"2314",org:"HAJ",eta:"09:19",ao:"738W",h:"HS1",mat:"D-ABKN",stand:"72",cinta:"17",tipo:"CONTACTO"},
+  {cia:"AEA",v:"6007",org:"BCN",eta:"09:21",ao:"738W",h:"DC4",mat:"EC-LPQ",stand:"92",cinta:"10",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2513",org:"IBZ",eta:"09:22",ao:"CRJX",h:"DC4",mat:"EC-MLC",stand:"36",cinta:"16",tipo:"CONTACTO"},
+  {cia:"EZY",v:"3359",org:"LPL",eta:"09:23",ao:"A20N",h:"EJU",mat:"G-UZHK",stand:"16",cinta:"13",tipo:"FINGER"},
+  {cia:"EWG",v:"7582",org:"HAM",eta:"09:33",ao:"A320",h:"EWG",mat:"LY-CAP",stand:"60",cinta:"14",tipo:"CONTACTO"},
+  {cia:"RYR",v:"226", org:"BER",eta:"09:37",ao:"738W",h:"RYR",mat:"9H-QBF",stand:"52",cinta:"08",tipo:"CONTACTO"},
+  {cia:"SWT",v:"7881",org:"IBZ",eta:"09:37",ao:"AT75",h:"DC4",mat:"EC-KKQ",stand:"32",cinta:"18",tipo:"CONTACTO"},
+  {cia:"EZY",v:"5731",org:"SEN",eta:"09:38",ao:"A20N",h:"EJU",mat:"G-UZHM",stand:"10",cinta:"15",tipo:"FINGER"},
+  {cia:"RYR",v:"2061",org:"MAD",eta:"09:40",ao:"738W",h:"RYR",mat:"9H-QAL",stand:"107",cinta:"07",tipo:"REMOTO_BUS"},
+  {cia:"AEA",v:"6031",org:"MAD",eta:"09:44",ao:"738W",h:"DC4",mat:"EC-MXM",stand:"86",cinta:"11",tipo:"CONTACTO"},
+  {cia:"EFW",v:"2670",org:"LGW",eta:"09:46",ao:"A320",h:"HU3",mat:"G-EUUV",stand:"—", cinta:"10",tipo:"ND"},
+  {cia:"RYR",v:"351", org:"SVQ",eta:"09:48",ao:"B38M",h:"RYR",mat:"EI-HLB",stand:"40",cinta:"08",tipo:"CONTACTO"},
+  {cia:"TVF",v:"4710",org:"ORY",eta:"09:50",ao:"738W",h:"HU3",mat:"F-HUYG",stand:"46",cinta:"11",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3906",org:"BCN",eta:"09:50",ao:"A32A",h:"DD8",mat:"EC-OKJ",stand:"96",cinta:"09",tipo:"CONTACTO"},
+  {cia:"AEA",v:"4008",org:"VLC",eta:"09:51",ao:"738W",h:"DC4",mat:"EC-NZN",stand:"84",cinta:"13",tipo:"CONTACTO"},
+  {cia:"AEA",v:"4025",org:"ALC",eta:"09:52",ao:"738W",h:"DC4",mat:"EC-LXV",stand:"98",cinta:"15",tipo:"CONTACTO"},
+  {cia:"SAS",v:"1809",org:"ARN",eta:"09:55",ao:"A20N",h:"DC4",mat:"EI-SIR",stand:"50",cinta:"21",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6583",org:"TSF",eta:"09:57",ao:"738W",h:"RYR",mat:"EI-DWW",stand:"38",cinta:"07",tipo:"CONTACTO"},
+  {cia:"RYR",v:"7212",org:"CGN",eta:"09:57",ao:"738W",h:"RYR",mat:"EI-EKC",stand:"48",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EWG",v:"8586",org:"BER",eta:"10:01",ao:"A32A",h:"EWG",mat:"D-AEWW",stand:"62",cinta:"16",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7282",org:"GVA",eta:"10:09",ao:"A320",h:"EJU",mat:"OE-IJE",stand:"54",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EXS",v:"717", org:"EDI",eta:"10:10",ao:"738W",h:"EXS",mat:"G-JZBM",stand:"—", cinta:"12",tipo:"ND"},
+  {cia:"EWG",v:"6895",org:"DUS",eta:"12:14",ao:"A320",h:"EWG",mat:"9H-EUL",stand:"54",cinta:"13",tipo:"CONTACTO"},
+  {cia:"RYR",v:"5700",org:"BGY",eta:"12:17",ao:"738W",h:"RYR",mat:"9H-QAV",stand:"42",cinta:"08",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3908",org:"BCN",eta:"12:19",ao:"A32B",h:"DD8",mat:"EC-MHB",stand:"92",cinta:"11",tipo:"CONTACTO"},
+  {cia:"RYR",v:"1954",org:"BHX",eta:"12:21",ao:"738W",h:"RYR",mat:"EI-EGB",stand:"12",cinta:"08",tipo:"FINGER"},
+  {cia:"CFG",v:"1502",org:"FRA",eta:"12:22",ao:"A320",h:"HS1",mat:"D-ASGE",stand:"50",cinta:"15",tipo:"CONTACTO"},
+  {cia:"EWG",v:"4124",org:"NUE",eta:"12:29",ao:"A320",h:"EWG",mat:"9H-EUR",stand:"68",cinta:"14",tipo:"CONTACTO"},
+  {cia:"DAH",v:"2000",org:"ALG",eta:"12:37",ao:"AT75",h:"DC4",mat:"7T-VUP",stand:"104",cinta:"11",tipo:"REMOTO_BUS"},
+  {cia:"RYR",v:"3110",org:"BUD",eta:"12:39",ao:"B38M",h:"RYR",mat:"SP-RZS",stand:"48",cinta:"07",tipo:"CONTACTO"},
+  {cia:"AEA",v:"6037",org:"BCN",eta:"12:45",ao:"738W",h:"DC4",mat:"EC-LPQ",stand:"88",cinta:"12",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6819",org:"SCN",eta:"12:48",ao:"A319",h:"EWG",mat:"9H-EXZ",stand:"56",cinta:"16",tipo:"CONTACTO"},
+  {cia:"IBS",v:"1659",org:"MAD",eta:"12:48",ao:"A21N",h:"DD8",mat:"EC-OBY",stand:"86",cinta:"10",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6829",org:"BRE",eta:"12:50",ao:"A32A",h:"EWG",mat:"9H-EWF",stand:"52",cinta:"15",tipo:"CONTACTO"},
+  {cia:"EWG",v:"8582",org:"BER",eta:"12:50",ao:"A32A",h:"EWG",mat:"D-AEWL",stand:"38",cinta:"13",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7254",org:"BHX",eta:"12:51",ao:"A32A",h:"EJU",mat:"OE-IVD",stand:"102",cinta:"14",tipo:"REMOTO_BUS"},
+  {cia:"CFG",v:"1514",org:"DUS",eta:"12:54",ao:"A32B",h:"HS1",mat:"D-ATCG",stand:"64",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EWG",v:"2584",org:"STR",eta:"12:55",ao:"A320",h:"EWG",mat:"9H-AMM",stand:"60",cinta:"11",tipo:"CONTACTO"},
+  {cia:"RYR",v:"2889",org:"BCN",eta:"12:55",ao:"738W",h:"RYR",mat:"9H-QCA",stand:"72",cinta:"07",tipo:"CONTACTO"},
+  {cia:"TRA",v:"6511",org:"EIN",eta:"12:58",ao:"738W",h:"HU3",mat:"PH-HZG",stand:"106",cinta:"17",tipo:"REMOTO_BUS"},
+  {cia:"EJU",v:"3749",org:"MXP",eta:"12:59",ao:"A319",h:"EJU",mat:"OE-LQS",stand:"107",cinta:"17",tipo:"REMOTO_BUS"},
+  {cia:"RYR",v:"29",  org:"STN",eta:"13:01",ao:"738W",h:"RYR",mat:"EI-DWM",stand:"10",cinta:"08",tipo:"FINGER"},
+  {cia:"EWG",v:"6885",org:"MUC",eta:"13:02",ao:"A320",h:"EWG",mat:"9H-EUQ",stand:"62",cinta:"19",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2485",org:"MAH",eta:"13:04",ao:"AT76",h:"DC4",mat:"EC-LRR",stand:"34B",cinta:"16",tipo:"REMOTO_BUS"},
+  {cia:"EJU",v:"7334",org:"BER",eta:"13:04",ao:"A32A",h:"EJU",mat:"OE-IZF",stand:"58",cinta:"18",tipo:"CONTACTO"},
+  {cia:"BAW",v:"468", org:"LHR",eta:"13:10",ao:"A320",h:"HU3",mat:"G-EUYB",stand:"16",cinta:"12",tipo:"FINGER"},
+  {cia:"CSW",v:"100", org:"ZRH",eta:"13:12",ao:"A320",h:"HU3",mat:"HB-JOK",stand:"96",cinta:"15",tipo:"CONTACTO"},
+  {cia:"RYR",v:"4512",org:"KRK",eta:"13:12",ao:"B38M",h:"RYR",mat:"SP-RZY",stand:"40",cinta:"07",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6805",org:"FKB",eta:"13:17",ao:"A320",h:"EWG",mat:"9H-EUC",stand:"50",cinta:"11",tipo:"CONTACTO"},
+  {cia:"RYR",v:"7831",org:"CRL",eta:"13:17",ao:"738W",h:"RYR",mat:"EI-EFI",stand:"68",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EZY",v:"3011",org:"BFS",eta:"13:25",ao:"A32A",h:"EJU",mat:"G-EZGX",stand:"18",cinta:"10",tipo:"FINGER"},
+  {cia:"RYR",v:"2881",org:"CPH",eta:"13:25",ao:"738W",h:"RYR",mat:"EI-DYL",stand:"46",cinta:"09",tipo:"CONTACTO"},
+  {cia:"IBB",v:"5106",org:"LPA",eta:"13:28",ao:"E295",h:"HU3",mat:"EC-OKB",stand:"94",cinta:"13",tipo:"CONTACTO"},
+  {cia:"TVF",v:"4714",org:"ORY",eta:"13:29",ao:"A20N",h:"HU3",mat:"F-HXSJ",stand:"102",cinta:"18",tipo:"REMOTO_BUS"},
+  {cia:"EJU",v:"7364",org:"BHD",eta:"13:30",ao:"A32A",h:"EJU",mat:"OE-IJH",stand:"101",cinta:"09",tipo:"REMOTO_BUS"},
+  {cia:"VLG",v:"3989",org:"ZAZ",eta:"13:32",ao:"A32A",h:"DD8",mat:"EC-OKJ",stand:"98",cinta:"12",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6567",org:"ALC",eta:"13:45",ao:"738W",h:"RYR",mat:"EI-EGC",stand:"48",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6887",org:"MUC",eta:"13:48",ao:"A320",h:"EWG",mat:"9H-EUV",stand:"44",cinta:"11",tipo:"CONTACTO"},
+  {cia:"SWR",v:"2156",org:"ZRH",eta:"13:48",ao:"BCS3",h:"DC4",mat:"YL-BTA",stand:"84",cinta:"17",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7887",org:"AMS",eta:"13:49",ao:"A20N",h:"EJU",mat:"OE-LSW",stand:"54",cinta:"19",tipo:"CONTACTO"},
+  {cia:"RYR",v:"1103",org:"MAN",eta:"13:49",ao:"738W",h:"RYR",mat:"EI-DHN",stand:"—", cinta:"08",tipo:"ND"},
+  {cia:"CFE",v:"8483",org:"LCY",eta:"13:51",ao:"E190",h:"HU3",mat:"G-LCAH",stand:"12",cinta:"12",tipo:"FINGER"},
+  {cia:"EWG",v:"586", org:"CGN",eta:"13:54",ao:"A32A",h:"EWG",mat:"9H-EWD",stand:"60",cinta:"15",tipo:"CONTACTO"},
+  {cia:"NSZ",v:"5611",org:"CPH",eta:"13:55",ao:"B38M",h:"HU3",mat:"SE-RTO",stand:"56",cinta:"12",tipo:"CONTACTO"},
+  {cia:"BAW",v:"494", org:"LHR",eta:"13:58",ao:"A21N",h:"HU3",mat:"G-TNEF",stand:"14",cinta:"12",tipo:"FINGER"},
+];
+
+let selTipo = 'ALL', selH = 'ALL';
+
+function tipoColor(t){
+  return {FINGER:"var(--finger)",CONTACTO:"var(--contacto)",REMOTO_BUS:"var(--rbus)",REMOTO_PIE:"var(--rpie)",ND:"var(--nd)"}[t]||"var(--nd)";
+}
+
+function renderFlights(){
   let list = flights;
-  if (filterTipoVal !== 'ALL') list = list.filter(f => f.tipo === filterTipoVal);
-  if (filterHandlerVal !== 'ALL') list = list.filter(f => f.handler === filterHandlerVal);
-
-  const container = document.getElementById('flight-list');
-  const countEl = document.getElementById('count-label');
-  countEl.textContent = `◈ ${list.length} vuelo${list.length!==1?'s':''} mostrado${list.length!==1?'s':''}`;
-  container.innerHTML = '';
-
-  list.forEach(f => {
-    const hc = handlerInfo[f.handler];
-    const tipoClass = f.tipo === 'ND' ? '' : f.tipo;
-    const card = document.createElement('div');
-    card.className = `flight-card ${tipoClass} fade-in`;
-    card.innerHTML = `
-      <div>
-        <div class="fc-cia" style="color:${hc.color}">${f.cia}</div>
-        <div class="fc-vuelo">${f.vuelo}</div>
+  if(selTipo!=='ALL') list=list.filter(f=>f.tipo===selTipo);
+  if(selH!=='ALL') list=list.filter(f=>f.h===selH);
+  document.getElementById('count-lbl').textContent=`◈ ${list.length} vuelo${list.length!==1?'s':''} mostrado${list.length!==1?'s':''}`;
+  const el=document.getElementById('flight-list');
+  el.innerHTML='';
+  list.forEach(f=>{
+    const hc=HC[f.h]||{name:f.h,color:'#667788'};
+    const tc=tipoColor(f.tipo);
+    const tl=TIPO_LABEL[f.tipo]||'—';
+    const d=document.createElement('div');
+    d.className=`fc ${f.tipo} fade-in`;
+    d.innerHTML=`
+      <div class="fc-stand-block">
+        <div class="fc-stand" style="color:${tc}">${f.stand}</div>
+        <div class="fc-cinta">CTA ${f.cinta}</div>
       </div>
-      <div class="fc-mid">
-        <div class="fc-ruta">${f.origen} → PMI</div>
-        <div class="fc-details">${f.ao} · Cinta ${f.cinta}</div>
-        <div class="fc-mat">${f.mat}</div>
-        <div class="fc-badges" style="margin-top:4px;">
-          ${f.tipo!=='ND'?`<span class="badge ${f.tipo}">${f.tipo}</span>`:''}
-          <span class="badge HANDLER">${f.handler}</span>
+      <div>
+        <div class="fc-cia-vuelo" style="color:${hc.color}">${f.cia} ${f.v}</div>
+        <div class="fc-ruta">${f.org} → PMI · ${f.ao}</div>
+        <div class="fc-bottom">
+          ${f.tipo!=='ND'?`<span class="badge ${f.tipo}">${tl}</span>`:''}
+          <span class="badge HANDLER">${f.h}</span>
+          <span class="fc-mat">${f.mat}</span>
         </div>
       </div>
       <div class="fc-right">
         <div class="fc-eta" style="color:${hc.color}">${f.eta}</div>
-        <div class="fc-stand" style="color:${hc.color}">STD ${f.stand}</div>
+        <div class="fc-handler-name">${hc.name}</div>
       </div>`;
-    container.appendChild(card);
+    el.appendChild(d);
   });
 }
 
-// ── RENDER HANDLERS ───────────────────────────────────────────────
-function renderHandlers() {
-  const container = document.getElementById('handler-list');
-  container.innerHTML = '';
-
-  Object.entries(handlerInfo).forEach(([code, info]) => {
-    const hFlights = flights.filter(f => f.handler === code);
-    const finger   = hFlights.filter(f => f.tipo==='FINGER').length;
-    const contacto = hFlights.filter(f => f.tipo==='CONTACTO').length;
-    const remoto   = hFlights.filter(f => f.tipo==='REMOTO').length;
-    const nd       = hFlights.filter(f => f.tipo==='ND').length;
-    if (hFlights.length === 0) return;
-
-    const zonaColor = info.zona==='REMOTO' ? 'var(--remoto)' : info.zona==='CONTACTO' ? 'var(--contacto)' : 'var(--teal)';
-
-    const card = document.createElement('div');
-    card.className = 'handler-card fade-in';
-    card.style.cssText = `background:linear-gradient(135deg,${info.color}0c,var(--bg3));border-color:${info.color}33;`;
-    card.innerHTML = `
-      <div class="hc-header">
-        <div>
-          <div class="hc-code" style="color:${info.color}">${code}</div>
-          <div class="hc-name">${info.name}</div>
-        </div>
-        <div>
-          <div class="hc-count" style="color:${info.color}">${hFlights.length}</div>
-          <div class="hc-count-label">vuelos</div>
-        </div>
+function renderHandlers(){
+  const el=document.getElementById('handler-list');
+  el.innerHTML='';
+  Object.entries(HC).forEach(([code,info])=>{
+    const hf=flights.filter(f=>f.h===code);
+    if(!hf.length) return;
+    const fn=hf.filter(f=>f.tipo==='FINGER').length;
+    const co=hf.filter(f=>f.tipo==='CONTACTO').length;
+    const rb=hf.filter(f=>f.tipo==='REMOTO_BUS').length;
+    const rp=hf.filter(f=>f.tipo==='REMOTO_PIE').length;
+    const nd=hf.filter(f=>f.tipo==='ND').length;
+    const d=document.createElement('div');
+    d.className='hcard fade-in';
+    d.style.cssText=`background:linear-gradient(135deg,${info.color}0c,var(--bg3));border-color:${info.color}33;`;
+    let bars='';
+    if(fn) bars+=`<div class="hbar" style="background:rgba(0,245,212,0.1);border-color:rgba(0,245,212,0.25)"><div class="hbar-n" style="color:var(--finger)">${fn}</div><div class="hbar-l" style="color:var(--finger)">Finger</div></div>`;
+    if(co) bars+=`<div class="hbar" style="background:rgba(76,201,240,0.1);border-color:rgba(76,201,240,0.25)"><div class="hbar-n" style="color:var(--contacto)">${co}</div><div class="hbar-l" style="color:var(--contacto)">Contacto</div></div>`;
+    if(rb) bars+=`<div class="hbar" style="background:rgba(248,150,30,0.1);border-color:rgba(248,150,30,0.25)"><div class="hbar-n" style="color:var(--rbus)">${rb}</div><div class="hbar-l" style="color:var(--rbus)">Rem.Bus</div></div>`;
+    if(rp) bars+=`<div class="hbar" style="background:rgba(247,37,133,0.1);border-color:rgba(247,37,133,0.25)"><div class="hbar-n" style="color:var(--rpie)">${rp}</div><div class="hbar-l" style="color:var(--rpie)">Rem.Pie</div></div>`;
+    if(nd) bars+=`<div class="hbar" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1)"><div class="hbar-n" style="color:var(--muted)">${nd}</div><div class="hbar-l" style="color:var(--muted)">N/D</div></div>`;
+    d.innerHTML=`
+      <div class="hcard-top">
+        <div><div class="hcard-code" style="color:${info.color}">${code}</div><div class="hcard-name">${info.name}</div></div>
+        <div class="hcard-total"><div class="hcard-n" style="color:${info.color}">${hf.length}</div><div class="hcard-nlabel">vuelos</div></div>
       </div>
-      <div class="hc-bars">
-        ${finger>0?`<div class="hc-bar" style="background:rgba(0,245,212,0.1);border:1px solid rgba(0,245,212,0.2)"><div class="hc-bar-val" style="color:var(--teal)">${finger}</div><div class="hc-bar-label" style="color:var(--teal)">Finger</div></div>`:''}
-        ${contacto>0?`<div class="hc-bar" style="background:rgba(76,201,240,0.1);border:1px solid rgba(76,201,240,0.2)"><div class="hc-bar-val" style="color:var(--contacto)">${contacto}</div><div class="hc-bar-label" style="color:var(--contacto)">Contacto</div></div>`:''}
-        ${remoto>0?`<div class="hc-bar" style="background:rgba(247,37,133,0.1);border:1px solid rgba(247,37,133,0.2)"><div class="hc-bar-val" style="color:var(--remoto)">${remoto}</div><div class="hc-bar-label" style="color:var(--remoto)">Remoto</div></div>`:''}
-        ${nd>0?`<div class="hc-bar" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)"><div class="hc-bar-val" style="color:var(--muted)">${nd}</div><div class="hc-bar-label" style="color:var(--muted)">N/D</div></div>`:''}
-      </div>
-      <div class="hc-zona" style="color:${zonaColor};border:1px solid ${zonaColor}22">
-        ◈ Zona dominante: <strong>${info.zona}</strong>
-      </div>`;
-    container.appendChild(card);
+      <div class="hcard-bars">${bars}</div>`;
+    el.appendChild(d);
   });
 }
 
-// ── RENDER ZONAS HANDLER LIST ─────────────────────────────────────
-function renderZonaHandlers() {
-  const container = document.getElementById('zona-handler-list');
-  container.innerHTML = '';
-  Object.entries(handlerInfo).forEach(([code, info]) => {
-    const zonaColor = info.zona==='REMOTO' ? 'var(--remoto)' : info.zona==='CONTACTO' ? 'var(--contacto)' : 'var(--teal)';
-    const msg = info.zona==='REMOTO' ? 'Prever bus y colchón de tiempo' : info.zona==='CONTACTO' ? 'Operativa directa, buffer estándar' : 'Operativa ágil, agrupa por zona';
-    const card = document.createElement('div');
-    card.className = 'zona-card fade-in';
-    card.style.cssText = `border-color:${info.color}22;`;
-    card.innerHTML = `
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-        <span style="font-size:13px;font-weight:900;letter-spacing:2px;color:${info.color}">${code}</span>
-        <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:${zonaColor};text-transform:uppercase;">${info.zona}</span>
+function renderGuiaHandlers(){
+  const el=document.getElementById('guia-handler-list');
+  el.innerHTML='';
+  const msgs={DC4:"Tendencia REMOTO BUS — prever autobús y colchón de tiempo",
+    DD8:"Tendencia REMOTO BUS — prever autobús y colchón de tiempo",
+    EJU:"Tendencia FINGER / B/C — operativa ágil",
+    EWG:"Tendencia CONTACTO — operativa directa estándar",
+    EXS:"Tendencia FINGER — operativa ágil",
+    HS1:"Tendencia CONTACTO — operativa directa estándar",
+    HU3:"Tendencia REMOTO BUS — prever autobús y colchón de tiempo",
+    RYR:"Tendencia CONTACTO — operativa directa estándar"};
+  Object.entries(HC).forEach(([code,info])=>{
+    const d=document.createElement('div');
+    d.className='gcard fade-in';
+    d.style.borderColor=info.color+'33';
+    d.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+        <span style="font-size:14px;font-weight:900;letter-spacing:2px;color:${info.color}">${code}</span>
+        <span style="font-size:10px;color:var(--sub);letter-spacing:1px;">${info.name}</span>
       </div>
-      <div style="font-size:10px;color:var(--sub);letter-spacing:1px;">${info.name}</div>
-      <div style="font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:4px;">→ ${msg}</div>`;
-    container.appendChild(card);
+      <div style="font-size:10px;color:var(--muted);letter-spacing:1px;">→ ${msgs[code]||''}</div>`;
+    el.appendChild(d);
   });
 }
 
-// ── FILTERS ───────────────────────────────────────────────────────
-function filterTipo(val, btn) {
-  filterTipoVal = val;
-  document.querySelectorAll('#tipo-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+function fTipo(val,btn){
+  selTipo=val;
+  document.querySelectorAll('#panel-vuelos .filter-row:first-child .filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderFlights();
 }
-function filterHandler(val, btn) {
-  filterHandlerVal = val;
-  document.querySelectorAll('#handler-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+function fHandler(val,btn){
+  selH=val;
+  document.querySelectorAll('#panel-vuelos .filter-row:nth-child(2) .filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderFlights();
 }
-
-// ── TABS ──────────────────────────────────────────────────────────
-function showPanel(id, btn) {
+function showPanel(id,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
   btn.classList.add('active');
 }
 
-// ── INIT ──────────────────────────────────────────────────────────
 renderFlights();
 renderHandlers();
-renderZonaHandlers();
+renderGuiaHandlers();
 </script>
 </body>
 </html>
