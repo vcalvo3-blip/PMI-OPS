@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="PMI Operativa"/>
 <meta name="theme-color" content="#020818"/>
-<title>PMI Operativa · 30 Mar 2026</title>
+<title>PMI Operativa · 03 Abr 2026</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -157,6 +157,21 @@ body::before{
 .gdot{width:8px;height:8px;border-radius:2px;flex-shrink:0;margin-top:3px;}
 .gtext{font-size:10px;color:var(--sub);letter-spacing:1px;line-height:1.5;}
 
+/* HANDLER FLIGHT LIST */
+.hfl-list{margin-top:10px;border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;}
+.hfl-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr auto;
+  gap:4px;align-items:center;
+  padding:6px 8px;border-radius:6px;margin-bottom:4px;
+  background:rgba(0,0,0,0.2);
+  font-family:'Courier New',monospace;
+}
+.hfl-vuelo{font-size:12px;font-weight:800;letter-spacing:1px;}
+.hfl-org{font-size:10px;color:var(--sub);letter-spacing:1px;}
+.hfl-stand{font-size:10px;font-weight:700;letter-spacing:1px;}
+.hfl-eta{font-size:14px;font-weight:900;letter-spacing:1px;text-align:right;}
+.hcard-toggle{padding:0;}
+
 .section-label{font-size:9px;letter-spacing:5px;color:#00f5d4;text-transform:uppercase;margin:14px 0 8px;opacity:0.55;}
 .fade-in{animation:fi 0.22s ease;}
 @keyframes fi{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
@@ -168,9 +183,9 @@ body::before{
   <div class="header-top">
     <div>
       <div class="header-title">◈ PMI OPERATIVA</div>
-      <div class="header-meta">Turno Mañana · 06:00 – 14:00</div>
+      <div class="header-meta">Llegadas · 03 ABR 2026</div>
     </div>
-    <div class="header-date">30 MAR<br>2026</div>
+    <div class="header-date">03 ABR<br>2026</div>
   </div>
   <!-- tipo legend -->
   <div class="tipo-legend">
@@ -276,114 +291,229 @@ const TIPO_LABEL = {
 };
 
 const flights = [
-  {cia:"EWG",v:"6815",org:"NUE",eta:"06:01",ao:"A32A",h:"EWG",mat:"9H-EWF",stand:"38",cinta:"12",tipo:"CONTACTO"},
-  {cia:"RYR",v:"1342",org:"BCN",eta:"06:49",ao:"738W",h:"RYR",mat:"9H-QAP",stand:"72",cinta:"08",tipo:"CONTACTO"},
-  {cia:"EWG",v:"6863",org:"ERF",eta:"06:51",ao:"A319",h:"EWG",mat:"9H-EXZ",stand:"66",cinta:"13",tipo:"CONTACTO"},
-  {cia:"CFG",v:"1504",org:"FRA",eta:"06:55",ao:"A32B",h:"HS1",mat:"D-ATCC",stand:"62",cinta:"12",tipo:"CONTACTO"},
-  {cia:"EWG",v:"6809",org:"PAD",eta:"07:04",ao:"A320",h:"EWG",mat:"9H-EUQ",stand:"46",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EWG",v:"6823",org:"FMO",eta:"07:07",ao:"A319",h:"EWG",mat:"9H-EXW",stand:"29",cinta:"16",tipo:"CONTACTO"},
-  {cia:"EWG",v:"580", org:"CGN",eta:"07:17",ao:"A32A",h:"EWG",mat:"D-AEWT",stand:"114",cinta:"11",tipo:"REMOTO_BUS"},
-  {cia:"VLG",v:"3900",org:"BCN",eta:"07:21",ao:"A32B",h:"DD8",mat:"EC-NLX",stand:"88",cinta:"09",tipo:"CONTACTO"},
-  {cia:"EWG",v:"3590",org:"HAJ",eta:"07:24",ao:"A320",h:"EWG",mat:"9H-EUC",stand:"58",cinta:"13",tipo:"CONTACTO"},
-  {cia:"EWG",v:"582", org:"CGN",eta:"07:27",ao:"A32A",h:"EWG",mat:"9H-EWD",stand:"56",cinta:"15",tipo:"CONTACTO"},
-  {cia:"TUI",v:"2128",org:"FRA",eta:"07:32",ao:"B38M",h:"HS1",mat:"D-AMAE",stand:"94",cinta:"17",tipo:"CONTACTO"},
-  {cia:"ANE",v:"2511",org:"IBZ",eta:"07:45",ao:"AT76",h:"DC4",mat:"EC-LRR",stand:"36",cinta:"16",tipo:"CONTACTO"},
-  {cia:"ANE",v:"2481",org:"MAH",eta:"07:46",ao:"AT76",h:"DC4",mat:"EC-LQV",stand:"34B",cinta:"18",tipo:"REMOTO_BUS"},
-  {cia:"EWG",v:"2580",org:"STR",eta:"07:46",ao:"A32A",h:"EWG",mat:"9H-EWE",stand:"68",cinta:"14",tipo:"CONTACTO"},
-  {cia:"RYR",v:"2736",org:"FKB",eta:"07:46",ao:"738W",h:"RYR",mat:"EI-DWC",stand:"48",cinta:"08",tipo:"CONTACTO"},
-  {cia:"LGL",v:"601", org:"LUX",eta:"07:52",ao:"738W",h:"DC4",mat:"LX-LGV",stand:"64",cinta:"15",tipo:"CONTACTO"},
-  {cia:"MBU",v:"6526",org:"LEJ",eta:"07:56",ao:"A20N",h:"HS1",mat:"ES-MBE",stand:"52",cinta:"17",tipo:"CONTACTO"},
-  {cia:"VLG",v:"3902",org:"BCN",eta:"07:56",ao:"A32B",h:"DD8",mat:"EC-MHS",stand:"92",cinta:"13",tipo:"CONTACTO"},
-  {cia:"EWG",v:"9572",org:"DUS",eta:"08:00",ao:"A320",h:"EWG",mat:"D-ABZI",stand:"42",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EWG",v:"8580",org:"BER",eta:"08:04",ao:"A321",h:"EWG",mat:"D-AIDU",stand:"72",cinta:"16",tipo:"CONTACTO"},
-  {cia:"TRA",v:"5623",org:"AMS",eta:"08:07",ao:"738W",h:"HU3",mat:"PH-HXE",stand:"54",cinta:"12",tipo:"CONTACTO"},
-  {cia:"TUI",v:"2312",org:"DUS",eta:"08:09",ao:"B38M",h:"HS1",mat:"D-AMAD",stand:"84",cinta:"10",tipo:"CONTACTO"},
-  {cia:"EWG",v:"2582",org:"STR",eta:"08:11",ao:"A320",h:"EWG",mat:"9H-EUV",stand:"50",cinta:"11",tipo:"CONTACTO"},
-  {cia:"RYR",v:"6218",org:"NRN",eta:"08:19",ao:"B38M",h:"RYR",mat:"EI-HGM",stand:"46",cinta:"09",tipo:"CONTACTO"},
-  {cia:"RYR",v:"104", org:"VIE",eta:"08:22",ao:"A320",h:"RYR",mat:"9H-LMJ",stand:"40",cinta:"08",tipo:"CONTACTO"},
-  {cia:"SWT",v:"7770",org:"IBZ",eta:"08:22",ao:"AT75",h:"DC4",mat:"EC-KUL",stand:"32",cinta:"16",tipo:"CONTACTO"},
-  {cia:"EWG",v:"7580",org:"HAM",eta:"08:24",ao:"A320",h:"EWG",mat:"LY-WIL",stand:"60",cinta:"11",tipo:"CONTACTO"},
-  {cia:"SWR",v:"2152",org:"ZRH",eta:"08:30",ao:"BCS3",h:"DC4",mat:"YL-AAQ",stand:"98",cinta:"16",tipo:"CONTACTO"},
-  {cia:"IBS",v:"1651",org:"MAD",eta:"08:32",ao:"A21N",h:"DD8",mat:"EC-OBY",stand:"86",cinta:"15",tipo:"CONTACTO"},
-  {cia:"VLG",v:"3983",org:"SCQ",eta:"08:32",ao:"A320",h:"DD8",mat:"EC-OFX",stand:"96",cinta:"13",tipo:"CONTACTO"},
-  {cia:"RYR",v:"7214",org:"VLC",eta:"08:35",ao:"A320",h:"RYR",mat:"9H-LOU",stand:"38",cinta:"07",tipo:"CONTACTO"},
-  {cia:"SAS",v:"585", org:"CPH",eta:"08:38",ao:"A20N",h:"DC4",mat:"EI-SCH",stand:"44",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EWG",v:"9576",org:"DUS",eta:"08:39",ao:"A320",h:"EWG",mat:"9H-EUX",stand:"62",cinta:"12",tipo:"CONTACTO"},
-  {cia:"TUI",v:"2714",org:"STR",eta:"08:50",ao:"B38M",h:"HS1",mat:"D-AMAY",stand:"68",cinta:"17",tipo:"CONTACTO"},
-  {cia:"EJU",v:"4773",org:"NTE",eta:"08:52",ao:"A32A",h:"EJU",mat:"OE-INH",stand:"56",cinta:"13",tipo:"CONTACTO"},
-  {cia:"EZY",v:"2709",org:"BRS",eta:"08:54",ao:"A32A",h:"EJU",mat:"G-EZPD",stand:"18",cinta:"11",tipo:"FINGER"},
-  {cia:"RYR",v:"4215",org:"TLS",eta:"09:03",ao:"738W",h:"RYR",mat:"EI-EKT",stand:"48",cinta:"07",tipo:"CONTACTO"},
-  {cia:"ANE",v:"2501",org:"MAH",eta:"09:06",ao:"AT76",h:"DC4",mat:"EC-OOP",stand:"34B",cinta:"18",tipo:"REMOTO_BUS"},
-  {cia:"RYR",v:"943", org:"DUB",eta:"09:06",ao:"B38M",h:"RYR",mat:"9H-VVF",stand:"—", cinta:"07",tipo:"ND"},
-  {cia:"EXS",v:"601", org:"EMA",eta:"09:09",ao:"738W",h:"EXS",mat:"G-DRTK",stand:"14",cinta:"12",tipo:"FINGER"},
-  {cia:"VLG",v:"3904",org:"BCN",eta:"09:09",ao:"A32A",h:"DD8",mat:"EC-OKI",stand:"94",cinta:"12",tipo:"CONTACTO"},
-  {cia:"IBS",v:"1655",org:"MAD",eta:"09:11",ao:"A21N",h:"DD8",mat:"EC-NJI",stand:"88",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EZY",v:"2329",org:"LTN",eta:"09:13",ao:"A32A",h:"EJU",mat:"G-EZWX",stand:"12",cinta:"09",tipo:"FINGER"},
-  {cia:"TUI",v:"2314",org:"HAJ",eta:"09:19",ao:"738W",h:"HS1",mat:"D-ABKN",stand:"72",cinta:"17",tipo:"CONTACTO"},
-  {cia:"AEA",v:"6007",org:"BCN",eta:"09:21",ao:"738W",h:"DC4",mat:"EC-LPQ",stand:"92",cinta:"10",tipo:"CONTACTO"},
-  {cia:"ANE",v:"2513",org:"IBZ",eta:"09:22",ao:"CRJX",h:"DC4",mat:"EC-MLC",stand:"36",cinta:"16",tipo:"CONTACTO"},
-  {cia:"EZY",v:"3359",org:"LPL",eta:"09:23",ao:"A20N",h:"EJU",mat:"G-UZHK",stand:"16",cinta:"13",tipo:"FINGER"},
-  {cia:"EWG",v:"7582",org:"HAM",eta:"09:33",ao:"A320",h:"EWG",mat:"LY-CAP",stand:"60",cinta:"14",tipo:"CONTACTO"},
-  {cia:"RYR",v:"226", org:"BER",eta:"09:37",ao:"738W",h:"RYR",mat:"9H-QBF",stand:"52",cinta:"08",tipo:"CONTACTO"},
-  {cia:"SWT",v:"7881",org:"IBZ",eta:"09:37",ao:"AT75",h:"DC4",mat:"EC-KKQ",stand:"32",cinta:"18",tipo:"CONTACTO"},
-  {cia:"EZY",v:"5731",org:"SEN",eta:"09:38",ao:"A20N",h:"EJU",mat:"G-UZHM",stand:"10",cinta:"15",tipo:"FINGER"},
-  {cia:"RYR",v:"2061",org:"MAD",eta:"09:40",ao:"738W",h:"RYR",mat:"9H-QAL",stand:"107",cinta:"07",tipo:"REMOTO_BUS"},
-  {cia:"AEA",v:"6031",org:"MAD",eta:"09:44",ao:"738W",h:"DC4",mat:"EC-MXM",stand:"86",cinta:"11",tipo:"CONTACTO"},
-  {cia:"EFW",v:"2670",org:"LGW",eta:"09:46",ao:"A320",h:"HU3",mat:"G-EUUV",stand:"—", cinta:"10",tipo:"ND"},
-  {cia:"RYR",v:"351", org:"SVQ",eta:"09:48",ao:"B38M",h:"RYR",mat:"EI-HLB",stand:"40",cinta:"08",tipo:"CONTACTO"},
-  {cia:"TVF",v:"4710",org:"ORY",eta:"09:50",ao:"738W",h:"HU3",mat:"F-HUYG",stand:"46",cinta:"11",tipo:"CONTACTO"},
-  {cia:"VLG",v:"3906",org:"BCN",eta:"09:50",ao:"A32A",h:"DD8",mat:"EC-OKJ",stand:"96",cinta:"09",tipo:"CONTACTO"},
-  {cia:"AEA",v:"4008",org:"VLC",eta:"09:51",ao:"738W",h:"DC4",mat:"EC-NZN",stand:"84",cinta:"13",tipo:"CONTACTO"},
-  {cia:"AEA",v:"4025",org:"ALC",eta:"09:52",ao:"738W",h:"DC4",mat:"EC-LXV",stand:"98",cinta:"15",tipo:"CONTACTO"},
-  {cia:"SAS",v:"1809",org:"ARN",eta:"09:55",ao:"A20N",h:"DC4",mat:"EI-SIR",stand:"50",cinta:"21",tipo:"CONTACTO"},
-  {cia:"RYR",v:"6583",org:"TSF",eta:"09:57",ao:"738W",h:"RYR",mat:"EI-DWW",stand:"38",cinta:"07",tipo:"CONTACTO"},
-  {cia:"RYR",v:"7212",org:"CGN",eta:"09:57",ao:"738W",h:"RYR",mat:"EI-EKC",stand:"48",cinta:"08",tipo:"CONTACTO"},
-  {cia:"EWG",v:"8586",org:"BER",eta:"10:01",ao:"A32A",h:"EWG",mat:"D-AEWW",stand:"62",cinta:"16",tipo:"CONTACTO"},
-  {cia:"EJU",v:"7282",org:"GVA",eta:"10:09",ao:"A320",h:"EJU",mat:"OE-IJE",stand:"54",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EXS",v:"717", org:"EDI",eta:"10:10",ao:"738W",h:"EXS",mat:"G-JZBM",stand:"—", cinta:"12",tipo:"ND"},
-  {cia:"EWG",v:"6895",org:"DUS",eta:"12:14",ao:"A320",h:"EWG",mat:"9H-EUL",stand:"54",cinta:"13",tipo:"CONTACTO"},
-  {cia:"RYR",v:"5700",org:"BGY",eta:"12:17",ao:"738W",h:"RYR",mat:"9H-QAV",stand:"42",cinta:"08",tipo:"CONTACTO"},
-  {cia:"VLG",v:"3908",org:"BCN",eta:"12:19",ao:"A32B",h:"DD8",mat:"EC-MHB",stand:"92",cinta:"11",tipo:"CONTACTO"},
-  {cia:"RYR",v:"1954",org:"BHX",eta:"12:21",ao:"738W",h:"RYR",mat:"EI-EGB",stand:"12",cinta:"08",tipo:"FINGER"},
-  {cia:"CFG",v:"1502",org:"FRA",eta:"12:22",ao:"A320",h:"HS1",mat:"D-ASGE",stand:"50",cinta:"15",tipo:"CONTACTO"},
-  {cia:"EWG",v:"4124",org:"NUE",eta:"12:29",ao:"A320",h:"EWG",mat:"9H-EUR",stand:"68",cinta:"14",tipo:"CONTACTO"},
-  {cia:"DAH",v:"2000",org:"ALG",eta:"12:37",ao:"AT75",h:"DC4",mat:"7T-VUP",stand:"104",cinta:"11",tipo:"REMOTO_BUS"},
-  {cia:"RYR",v:"3110",org:"BUD",eta:"12:39",ao:"B38M",h:"RYR",mat:"SP-RZS",stand:"48",cinta:"07",tipo:"CONTACTO"},
-  {cia:"AEA",v:"6037",org:"BCN",eta:"12:45",ao:"738W",h:"DC4",mat:"EC-LPQ",stand:"88",cinta:"12",tipo:"CONTACTO"},
-  {cia:"EWG",v:"6819",org:"SCN",eta:"12:48",ao:"A319",h:"EWG",mat:"9H-EXZ",stand:"56",cinta:"16",tipo:"CONTACTO"},
-  {cia:"IBS",v:"1659",org:"MAD",eta:"12:48",ao:"A21N",h:"DD8",mat:"EC-OBY",stand:"86",cinta:"10",tipo:"CONTACTO"},
-  {cia:"EWG",v:"6829",org:"BRE",eta:"12:50",ao:"A32A",h:"EWG",mat:"9H-EWF",stand:"52",cinta:"15",tipo:"CONTACTO"},
-  {cia:"EWG",v:"8582",org:"BER",eta:"12:50",ao:"A32A",h:"EWG",mat:"D-AEWL",stand:"38",cinta:"13",tipo:"CONTACTO"},
-  {cia:"EJU",v:"7254",org:"BHX",eta:"12:51",ao:"A32A",h:"EJU",mat:"OE-IVD",stand:"102",cinta:"14",tipo:"REMOTO_BUS"},
-  {cia:"CFG",v:"1514",org:"DUS",eta:"12:54",ao:"A32B",h:"HS1",mat:"D-ATCG",stand:"64",cinta:"14",tipo:"CONTACTO"},
-  {cia:"EWG",v:"2584",org:"STR",eta:"12:55",ao:"A320",h:"EWG",mat:"9H-AMM",stand:"60",cinta:"11",tipo:"CONTACTO"},
-  {cia:"RYR",v:"2889",org:"BCN",eta:"12:55",ao:"738W",h:"RYR",mat:"9H-QCA",stand:"72",cinta:"07",tipo:"CONTACTO"},
-  {cia:"TRA",v:"6511",org:"EIN",eta:"12:58",ao:"738W",h:"HU3",mat:"PH-HZG",stand:"106",cinta:"17",tipo:"REMOTO_BUS"},
-  {cia:"EJU",v:"3749",org:"MXP",eta:"12:59",ao:"A319",h:"EJU",mat:"OE-LQS",stand:"107",cinta:"17",tipo:"REMOTO_BUS"},
-  {cia:"RYR",v:"29",  org:"STN",eta:"13:01",ao:"738W",h:"RYR",mat:"EI-DWM",stand:"10",cinta:"08",tipo:"FINGER"},
-  {cia:"EWG",v:"6885",org:"MUC",eta:"13:02",ao:"A320",h:"EWG",mat:"9H-EUQ",stand:"62",cinta:"19",tipo:"CONTACTO"},
-  {cia:"ANE",v:"2485",org:"MAH",eta:"13:04",ao:"AT76",h:"DC4",mat:"EC-LRR",stand:"34B",cinta:"16",tipo:"REMOTO_BUS"},
-  {cia:"EJU",v:"7334",org:"BER",eta:"13:04",ao:"A32A",h:"EJU",mat:"OE-IZF",stand:"58",cinta:"18",tipo:"CONTACTO"},
-  {cia:"BAW",v:"468", org:"LHR",eta:"13:10",ao:"A320",h:"HU3",mat:"G-EUYB",stand:"16",cinta:"12",tipo:"FINGER"},
-  {cia:"CSW",v:"100", org:"ZRH",eta:"13:12",ao:"A320",h:"HU3",mat:"HB-JOK",stand:"96",cinta:"15",tipo:"CONTACTO"},
-  {cia:"RYR",v:"4512",org:"KRK",eta:"13:12",ao:"B38M",h:"RYR",mat:"SP-RZY",stand:"40",cinta:"07",tipo:"CONTACTO"},
-  {cia:"EWG",v:"6805",org:"FKB",eta:"13:17",ao:"A320",h:"EWG",mat:"9H-EUC",stand:"50",cinta:"11",tipo:"CONTACTO"},
-  {cia:"RYR",v:"7831",org:"CRL",eta:"13:17",ao:"738W",h:"RYR",mat:"EI-EFI",stand:"68",cinta:"08",tipo:"CONTACTO"},
-  {cia:"EZY",v:"3011",org:"BFS",eta:"13:25",ao:"A32A",h:"EJU",mat:"G-EZGX",stand:"18",cinta:"10",tipo:"FINGER"},
-  {cia:"RYR",v:"2881",org:"CPH",eta:"13:25",ao:"738W",h:"RYR",mat:"EI-DYL",stand:"46",cinta:"09",tipo:"CONTACTO"},
-  {cia:"IBB",v:"5106",org:"LPA",eta:"13:28",ao:"E295",h:"HU3",mat:"EC-OKB",stand:"94",cinta:"13",tipo:"CONTACTO"},
-  {cia:"TVF",v:"4714",org:"ORY",eta:"13:29",ao:"A20N",h:"HU3",mat:"F-HXSJ",stand:"102",cinta:"18",tipo:"REMOTO_BUS"},
-  {cia:"EJU",v:"7364",org:"BHD",eta:"13:30",ao:"A32A",h:"EJU",mat:"OE-IJH",stand:"101",cinta:"09",tipo:"REMOTO_BUS"},
-  {cia:"VLG",v:"3989",org:"ZAZ",eta:"13:32",ao:"A32A",h:"DD8",mat:"EC-OKJ",stand:"98",cinta:"12",tipo:"CONTACTO"},
-  {cia:"RYR",v:"6567",org:"ALC",eta:"13:45",ao:"738W",h:"RYR",mat:"EI-EGC",stand:"48",cinta:"08",tipo:"CONTACTO"},
-  {cia:"EWG",v:"6887",org:"MUC",eta:"13:48",ao:"A320",h:"EWG",mat:"9H-EUV",stand:"44",cinta:"11",tipo:"CONTACTO"},
-  {cia:"SWR",v:"2156",org:"ZRH",eta:"13:48",ao:"BCS3",h:"DC4",mat:"YL-BTA",stand:"84",cinta:"17",tipo:"CONTACTO"},
-  {cia:"EJU",v:"7887",org:"AMS",eta:"13:49",ao:"A20N",h:"EJU",mat:"OE-LSW",stand:"54",cinta:"19",tipo:"CONTACTO"},
-  {cia:"RYR",v:"1103",org:"MAN",eta:"13:49",ao:"738W",h:"RYR",mat:"EI-DHN",stand:"—", cinta:"08",tipo:"ND"},
-  {cia:"CFE",v:"8483",org:"LCY",eta:"13:51",ao:"E190",h:"HU3",mat:"G-LCAH",stand:"12",cinta:"12",tipo:"FINGER"},
-  {cia:"EWG",v:"586", org:"CGN",eta:"13:54",ao:"A32A",h:"EWG",mat:"9H-EWD",stand:"60",cinta:"15",tipo:"CONTACTO"},
-  {cia:"NSZ",v:"5611",org:"CPH",eta:"13:55",ao:"B38M",h:"HU3",mat:"SE-RTO",stand:"56",cinta:"12",tipo:"CONTACTO"},
-  {cia:"BAW",v:"494", org:"LHR",eta:"13:58",ao:"A21N",h:"HU3",mat:"G-TNEF",stand:"14",cinta:"12",tipo:"FINGER"},
+  {cia:"DLH",v:"1156",org:"FRA",eta:"11:38",ao:"A321",h:"DC4",mat:"D-AISF",stand:"80",cinta:"19",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3437",org:"LIS",eta:"11:39",ao:"A320",h:"DD8",mat:"EC-JTQ",stand:"98",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7290",org:"ZRH",eta:"11:42",ao:"A32A",h:"EJU",mat:"OE-IVB",stand:"58",cinta:"13",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2515",org:"IBZ",eta:"11:44",ao:"AT76",h:"DC4",mat:"EC-OOP",stand:"34B",cinta:"16",tipo:"REMOTO_BUS"},
+  {cia:"SWR",v:"2158",org:"ZRH",eta:"11:48",ao:"BCS3",h:"DC4",mat:"HB-JCD",stand:"84",cinta:"15",tipo:"CONTACTO"},
+  {cia:"AEA",v:"6013",org:"MAD",eta:"11:53",ao:"738W",h:"DC4",mat:"EC-NZR",stand:"88",cinta:"09",tipo:"CONTACTO"},
+  {cia:"SWT",v:"7883",org:"MAH",eta:"11:54",ao:"AT75",h:"DC4",mat:"EC-KKQ",stand:"32",cinta:"16",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3971",org:"ZRH",eta:"11:57",ao:"A320",h:"DD8",mat:"EC-OFH",stand:"90",cinta:"11",tipo:"CONTACTO"},
+  {cia:"RYR",v:"7827",org:"VLC",eta:"11:57",ao:"A320",h:"RYR",mat:"9H-LMP",stand:"119",cinta:"06",tipo:"REMOTO_BUS"},
+  {cia:"CFG",v:"1508",org:"MUC",eta:"12:01",ao:"A320",h:"HS1",mat:"D-AICH",stand:"27",cinta:"14",tipo:"CONTACTO"},
+  {cia:"SAS",v:"1805",org:"ARN",eta:"12:06",ao:"A20N",h:"DC4",mat:"EI-SIH",stand:"62",cinta:"12",tipo:"CONTACTO"},
+  {cia:"RYR",v:"2347",org:"NCL",eta:"12:13",ao:"B38M",h:"RYR",mat:"EI-ILB",stand:"107",cinta:"08",tipo:"REMOTO_BUS"},
+  {cia:"RYR",v:"351",org:"SVQ",eta:"12:16",ao:"A320",h:"RYR",mat:"9H-IBJ",stand:"48",cinta:"08",tipo:"CONTACTO"},
+  {cia:"RYR",v:"4215",org:"TLS",eta:"12:17",ao:"738W",h:"RYR",mat:"EI-DYX",stand:"46",cinta:"07",tipo:"CONTACTO"},
+  {cia:"EWG",v:"9576",org:"DUS",eta:"12:20",ao:"A32A",h:"EWG",mat:"D-AEWQ",stand:"50",cinta:"13",tipo:"CONTACTO"},
+  {cia:"RYR",v:"698",org:"PIK",eta:"12:21",ao:"738W",h:"RYR",mat:"EI-DYR",stand:"105",cinta:"06",tipo:"REMOTO_BUS"},
+  {cia:"EWG",v:"7590",org:"HAM",eta:"12:23",ao:"A320",h:"EWG",mat:"9H-EUM",stand:"56",cinta:"11",tipo:"CONTACTO"},
+  {cia:"IBS",v:"1659",org:"MAD",eta:"12:30",ao:"A21N",h:"DD8",mat:"EC-OBY",stand:"96",cinta:"14",tipo:"CONTACTO"},
+  {cia:"RYR",v:"2049",org:"HAM",eta:"12:30",ao:"A320",h:"RYR",mat:"9H-LMI",stand:"64",cinta:"07",tipo:"CONTACTO"},
+  {cia:"RYR",v:"2177",org:"LUX",eta:"12:33",ao:"A320",h:"RYR",mat:"9H-LMB",stand:"38",cinta:"06",tipo:"CONTACTO"},
+  {cia:"CFG",v:"1502",org:"FRA",eta:"12:34",ao:"A320",h:"HS1",mat:"D-AICA",stand:"114B",cinta:"17",tipo:"REMOTO_BUS"},
+  {cia:"RYR",v:"7831",org:"CRL",eta:"12:36",ao:"738W",h:"RYR",mat:"9H-QDA",stand:"44",cinta:"09",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6811",org:"BSL",eta:"12:40",ao:"A320",h:"EWG",mat:"9H-EUC",stand:"54",cinta:"16",tipo:"CONTACTO"},
+  {cia:"EJU",v:"8021",org:"LGW",eta:"12:40",ao:"A32A",h:"EJU",mat:"HB-JXP",stand:"24",cinta:"15",tipo:"FINGER"},
+  {cia:"VOE",v:"2442",org:"BOD",eta:"12:41",ao:"A320",h:"HU3",mat:"EC-NOQ",stand:"82",cinta:"18",tipo:"CONTACTO"},
+  {cia:"EWG",v:"4368",org:"SZG",eta:"12:47",ao:"A319",h:"EWG",mat:"9H-EXT",stand:"60",cinta:"11",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3908",org:"BCN",eta:"12:53",ao:"A320",h:"DD8",mat:"EC-OFY",stand:"92",cinta:"14",tipo:"CONTACTO"},
+  {cia:"RYR",v:"5182",org:"FKB",eta:"12:53",ao:"738W",h:"RYR",mat:"EI-DWC",stand:"40",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EDW",v:"246",org:"ZRH",eta:"12:55",ao:"A320",h:"DC4",mat:"HB-IHZ",stand:"80",cinta:"17",tipo:"CONTACTO"},
+  {cia:"BAW",v:"468",org:"LHR",eta:"12:57",ao:"A21N",h:"HU3",mat:"G-NEOW",stand:"20",cinta:"19",tipo:"FINGER"},
+  {cia:"EJU",v:"7330",org:"LBA",eta:"13:04",ao:"A319",h:"EJU",mat:"OE-LQQ",stand:"25",cinta:"12",tipo:"CONTACTO"},
+  {cia:"IBB",v:"5106",org:"LPA",eta:"13:05",ao:"E295",h:"HU3",mat:"EC-OJK",stand:"86",cinta:"13",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6837",org:"ZRH",eta:"13:08",ao:"A32A",h:"EWG",mat:"D-AEWO",stand:"68",cinta:"11",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6819",org:"SCN",eta:"13:10",ao:"A320",h:"EWG",mat:"9H-EUL",stand:"42",cinta:"20",tipo:"CONTACTO"},
+  {cia:"RYR",v:"8993",org:"BER",eta:"13:16",ao:"B38M",h:"RYR",mat:"EI-IGK",stand:"48",cinta:"09",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6145",org:"WAW",eta:"13:19",ao:"738W",h:"RYR",mat:"9H-QBG",stand:"52",cinta:"08",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2485",org:"MAH",eta:"13:20",ao:"AT76",h:"DC4",mat:"EC-NBG",stand:"32",cinta:"16",tipo:"CONTACTO"},
+  {cia:"AEA",v:"6037",org:"BCN",eta:"13:25",ao:"738W",h:"DC4",mat:"EC-LPQ",stand:"94",cinta:"10",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6801",org:"LEJ",eta:"13:28",ao:"A32A",h:"EWG",mat:"9H-EWE",stand:"62",cinta:"14",tipo:"CONTACTO"},
+  {cia:"CSW",v:"100",org:"ZRH",eta:"13:31",ao:"A320",h:"HU3",mat:"HB-JOS",stand:"84",cinta:"15",tipo:"CONTACTO"},
+  {cia:"RYR",v:"452",org:"NUE",eta:"13:32",ao:"738W",h:"RYR",mat:"EI-ENM",stand:"46",cinta:"06",tipo:"CONTACTO"},
+  {cia:"RYR",v:"7174",org:"FCO",eta:"13:34",ao:"738W",h:"RYR",mat:"EI-EVK",stand:"72",cinta:"07",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7336",org:"BER",eta:"13:35",ao:"A319",h:"EJU",mat:"OE-LQE",stand:"24",cinta:"16",tipo:"FINGER"},
+  {cia:"EWG",v:"9594",org:"DUS",eta:"13:39",ao:"A319",h:"EWG",mat:"D-AGWU",stand:"38",cinta:"18",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6885",org:"MUC",eta:"13:42",ao:"A320",h:"EWG",mat:"9H-EUQ",stand:"58",cinta:"17",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6829",org:"BRE",eta:"13:43",ao:"A320",h:"EWG",mat:"9H-EUS",stand:"44",cinta:"13",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6031",org:"EMA",eta:"13:43",ao:"A320",h:"RYR",mat:"9H-LOT",stand:"104",cinta:"09",tipo:"REMOTO_BUS"},
+  {cia:"CFE",v:"8483",org:"LCY",eta:"13:49",ao:"E190",h:"HU3",mat:"G-LCYM",stand:"10",cinta:"19",tipo:"FINGER"},
+  {cia:"EWG",v:"4098",org:"DTM",eta:"13:51",ao:"A320",h:"EWG",mat:"9H-EUW",stand:"56",cinta:"12",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6887",org:"MUC",eta:"13:57",ao:"A320",h:"EWG",mat:"9H-EUX",stand:"60",cinta:"14",tipo:"CONTACTO"},
+  {cia:"RYR",v:"4375",org:"GOT",eta:"13:57",ao:"A320",h:"RYR",mat:"9H-LMC",stand:"109",cinta:"08",tipo:"REMOTO_BUS"},
+  {cia:"EWG",v:"9580",org:"DUS",eta:"13:58",ao:"A32A",h:"EWG",mat:"9H-EWI",stand:"40",cinta:"15",tipo:"CONTACTO"},
+  {cia:"EZY",v:"2711",org:"BRS",eta:"14:03",ao:"A320",h:"EJU",mat:"G-EZTJ",stand:"12",cinta:"10",tipo:"FINGER"},
+  {cia:"RYR",v:"7212",org:"CGN",eta:"14:05",ao:"738W",h:"RYR",mat:"EI-EKC",stand:"62",cinta:"06",tipo:"CONTACTO"},
+  {cia:"SWR",v:"2156",org:"ZRH",eta:"14:06",ao:"BCS3",h:"DC4",mat:"YL-BTD",stand:"96",cinta:"19",tipo:"CONTACTO"},
+  {cia:"EWG",v:"8584",org:"BER",eta:"14:07",ao:"A319",h:"EWG",mat:"D-AGWP",stand:"28",cinta:"11",tipo:"FINGER"},
+  {cia:"SWT",v:"7885",org:"IBZ",eta:"14:10",ao:"AT75",h:"DC4",mat:"EC-KKQ",stand:"121",cinta:"16",tipo:"REMOTO_BUS"},
+  {cia:"AEA",v:"5200",org:"GRX",eta:"14:13",ao:"738W",h:"DC4",mat:"EC-LPR",stand:"88",cinta:"16",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3867",org:"OVD",eta:"14:16",ao:"A32A",h:"DD8",mat:"EC-MEQ",stand:"86",cinta:"13",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3264",org:"SDR",eta:"14:17",ao:"A32A",h:"DD8",mat:"EC-MLE",stand:"82",cinta:"18",tipo:"CONTACTO"},
+  {cia:"TUI",v:"2618",org:"HAJ",eta:"14:21",ao:"738W",h:"HS1",mat:"D-ABKN",stand:"80",cinta:"17",tipo:"CONTACTO"},
+  {cia:"RYR",v:"5184",org:"FKB",eta:"14:24",ao:"738W",h:"RYR",mat:"EI-EVM",stand:"46",cinta:"09",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6567",org:"ALC",eta:"14:25",ao:"B38M",h:"RYR",mat:"9H-VUL",stand:"54",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6891",org:"MUC",eta:"14:29",ao:"A320",h:"EWG",mat:"9H-EUN",stand:"64",cinta:"11",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3936",org:"BIO",eta:"14:30",ao:"A20N",h:"DD8",mat:"EC-NCS",stand:"98",cinta:"16",tipo:"CONTACTO"},
+  {cia:"EWG",v:"7588",org:"HAM",eta:"14:45",ao:"A320",h:"EWG",mat:"LY-GYM",stand:"48",cinta:"15",tipo:"CONTACTO"},
+  {cia:"RYR",v:"3782",org:"BRE",eta:"14:45",ao:"738W",h:"RYR",mat:"9H-QAY",stand:"68",cinta:"06",tipo:"CONTACTO"},
+  {cia:"RYR",v:"4212",org:"HHN",eta:"14:50",ao:"738W",h:"RYR",mat:"EI-EMI",stand:"50",cinta:"07",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3148",org:"AGP",eta:"14:50",ao:"A320",h:"DD8",mat:"EC-NUO",stand:"94",cinta:"18",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3953",org:"VLC",eta:"14:55",ao:"A320",h:"DD8",mat:"EC-LOC",stand:"92",cinta:"14",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6378",org:"BCN",eta:"15:00",ao:"B38M",h:"RYR",mat:"EI-IKC",stand:"46",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EWG",v:"586",org:"CGN",eta:"15:05",ao:"A320",h:"EWG",mat:"D-ABHF",stand:"42",cinta:"11",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3910",org:"BCN",eta:"15:05",ao:"A320",h:"DD8",mat:"EC-JTQ",stand:"96",cinta:"12",tipo:"CONTACTO"},
+  {cia:"EZY",v:"8085",org:"LGW",eta:"15:10",ao:"A320",h:"EJU",mat:"G-EJCR",stand:"18",cinta:"10",tipo:"FINGER"},
+  {cia:"RYR",v:"2310",org:"LBA",eta:"15:10",ao:"738W",h:"RYR",mat:"EI-EBO",stand:"105",cinta:"08",tipo:"REMOTO_BUS"},
+  {cia:"DLH",v:"1158",org:"FRA",eta:"15:10",ao:"A321",h:"DC4",mat:"D-AIRO",stand:"84",cinta:"12",tipo:"CONTACTO"},
+  {cia:"TVS",v:"2445",org:"RMU",eta:"15:10",ao:"B38M",h:"DC4",mat:"OK-SWJ",stand:"52",cinta:"18",tipo:"CONTACTO"},
+  {cia:"TRA",v:"5627",org:"AMS",eta:"15:10",ao:"A21N",h:"HU3",mat:"PH-YHE",stand:"60",cinta:"13",tipo:"CONTACTO"},
+  {cia:"CXI",v:"557",org:"NUE",eta:"15:15",ao:"738W",h:"DC4",mat:"9H-CXD",stand:"44",cinta:"13",tipo:"CONTACTO"},
+  {cia:"EWG",v:"9586",org:"DUS",eta:"15:20",ao:"A320",h:"EWG",mat:"9H-MLR",stand:"40",cinta:"17",tipo:"CONTACTO"},
+  {cia:"EWG",v:"590",org:"CGN",eta:"15:25",ao:"A320",h:"EWG",mat:"D-ABZN",stand:"64",cinta:"18",tipo:"CONTACTO"},
+  {cia:"RYR",v:"7727",org:"BRS",eta:"15:25",ao:"738W",h:"RYR",mat:"EI-DWW",stand:"10",cinta:"06",tipo:"FINGER"},
+  {cia:"EJU",v:"1003",org:"BSL",eta:"15:30",ao:"A20N",h:"EJU",mat:"HB-AYM",stand:"58",cinta:"11",tipo:"CONTACTO"},
+  {cia:"IBS",v:"1663",org:"MAD",eta:"15:35",ao:"A32A",h:"DD8",mat:"EC-LUS",stand:"90",cinta:"09",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2401",org:"VLC",eta:"15:35",ao:"CRJX",h:"DC4",mat:"EC-MLN",stand:"36",cinta:"16",tipo:"CONTACTO"},
+  {cia:"RYR",v:"500",org:"VIE",eta:"15:40",ao:"A320",h:"RYR",mat:"9H-LMJ",stand:"54",cinta:"07",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3928",org:"GRX",eta:"15:45",ao:"A32A",h:"DD8",mat:"EC-OKJ",stand:"88",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EZY",v:"2331",org:"LTN",eta:"15:45",ao:"A20N",h:"EJU",mat:"G-UZHY",stand:"16",cinta:"10",tipo:"FINGER"},
+  {cia:"RYR",v:"2053",org:"MAD",eta:"15:50",ao:"738W",h:"RYR",mat:"9H-QAS",stand:"72",cinta:"06",tipo:"CONTACTO"},
+  {cia:"RYR",v:"1202",org:"STN",eta:"15:55",ao:"738W",h:"RYR",mat:"EI-DWV",stand:"14",cinta:"08",tipo:"FINGER"},
+  {cia:"RYR",v:"7837",org:"CRL",eta:"15:55",ao:"738W",h:"RYR",mat:"9H-QEA",stand:"38",cinta:"07",tipo:"CONTACTO"},
+  {cia:"AEA",v:"6067",org:"MAD",eta:"15:55",ao:"738W",h:"DC4",mat:"EC-MXM",stand:"86",cinta:"13",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2491",org:"MAH",eta:"16:00",ao:"AT76",h:"DC4",mat:"EC-OOP",stand:"34B",cinta:"16",tipo:"REMOTO_BUS"},
+  {cia:"EJU",v:"4373",org:"LYS",eta:"16:00",ao:"A319",h:"EJU",mat:"OE-LQG",stand:"62",cinta:"11",tipo:"CONTACTO"},
+  {cia:"NSZ",v:"5621",org:"OSL",eta:"16:05",ao:"738W",h:"HU3",mat:"SE-RPU",stand:"56",cinta:"12",tipo:"CONTACTO"},
+  {cia:"RYR",v:"9495",org:"NRN",eta:"16:15",ao:"738W",h:"RYR",mat:"EI-EST",stand:"48",cinta:"08",tipo:"CONTACTO"},
+  {cia:"RYR",v:"829",org:"BOH",eta:"16:15",ao:"738W",h:"RYR",mat:"9H-QAE",stand:"20",cinta:"07",tipo:"FINGER"},
+  {cia:"AEA",v:"6071",org:"BCN",eta:"16:15",ao:"738W",h:"DC4",mat:"EC-LPQ",stand:"92",cinta:"09",tipo:"CONTACTO"},
+  {cia:"TVF",v:"4840",org:"LYS",eta:"16:25",ao:"738W",h:"HU3",mat:"F-HUYB",stand:"68",cinta:"12",tipo:"CONTACTO"},
+  {cia:"RYR",v:"7514",org:"ORK",eta:"16:30",ao:"738W",h:"RYR",mat:"EI-DHE",stand:"12",cinta:"08",tipo:"FINGER"},
+  {cia:"EWG",v:"9590",org:"DUS",eta:"16:35",ao:"A21N",h:"EWG",mat:"D-AEEC",stand:"52",cinta:"13",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2519",org:"IBZ",eta:"16:40",ao:"AT76",h:"DC4",mat:"EC-LQV",stand:"32",cinta:"16",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3912",org:"BCN",eta:"16:40",ao:"A320",h:"DD8",mat:"EC-MBD",stand:"80",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7262",org:"SEN",eta:"16:45",ao:"A32A",h:"EJU",mat:"OE-IJH",stand:"10",cinta:"10",tipo:"FINGER"},
+  {cia:"CFG",v:"1514",org:"DUS",eta:"16:50",ao:"A32B",h:"HS1",mat:"D-ATCG",stand:"40",cinta:"11",tipo:"CONTACTO"},
+  {cia:"BAW",v:"494",org:"LHR",eta:"16:55",ao:"A319",h:"HU3",mat:"G-DBCH",stand:"18",cinta:"12",tipo:"FINGER"},
+  {cia:"RYR",v:"2495",org:"BCN",eta:"16:55",ao:"738W",h:"RYR",mat:"EI-DCN",stand:"72",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7366",org:"AMS",eta:"16:55",ao:"A32A",h:"EJU",mat:"OE-INL",stand:"100",cinta:"15",tipo:"REMOTO_BUS"},
+  {cia:"IBS",v:"1667",org:"MAD",eta:"17:10",ao:"A320",h:"DD8",mat:"EC-JFH",stand:"96",cinta:"09",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7274",org:"BSL",eta:"17:15",ao:"A32A",h:"EJU",mat:"OE-IVB",stand:"101",cinta:"14",tipo:"REMOTO_BUS"},
+  {cia:"DLH",v:"1794",org:"MUC",eta:"17:25",ao:"A32A",h:"DC4",mat:"D-AIZZ",stand:"88",cinta:"13",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7302",org:"BOD",eta:"17:25",ao:"A32A",h:"EJU",mat:"HB-JXP",stand:"50",cinta:"12",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2507",org:"MAH",eta:"17:30",ao:"AT76",h:"DC4",mat:"EC-NBG",stand:"34B",cinta:"16",tipo:"REMOTO_BUS"},
+  {cia:"EJU",v:"7294",org:"NCE",eta:"17:30",ao:"A319",h:"EJU",mat:"OE-LQE",stand:"102",cinta:"18",tipo:"REMOTO_BUS"},
+  {cia:"SWR",v:"2150",org:"ZRH",eta:"17:30",ao:"A320",h:"DC4",mat:"HB-IJR",stand:"84",cinta:"11",tipo:"CONTACTO"},
+  {cia:"VOE",v:"2622",org:"LYS",eta:"17:35",ao:"A320",h:"HU3",mat:"EC-NPB",stand:"82",cinta:"15",tipo:"CONTACTO"},
+  {cia:"RYR",v:"5677",org:"AGP",eta:"17:40",ao:"738W",h:"RYR",mat:"9H-QBG",stand:"58",cinta:"08",tipo:"CONTACTO"},
+  {cia:"CFG",v:"1520",org:"HAM",eta:"17:45",ao:"A21N",h:"HS1",mat:"D-ANLA",stand:"38",cinta:"14",tipo:"CONTACTO"},
+  {cia:"CXI",v:"501",org:"DUS",eta:"17:50",ao:"A320",h:"DC4",mat:"",stand:"56",cinta:"13",tipo:"CONTACTO"},
+  {cia:"RYR",v:"8434",org:"FMM",eta:"17:50",ao:"A320",h:"RYR",mat:"9H-LMB",stand:"108",cinta:"06",tipo:"REMOTO_BUS"},
+  {cia:"AUA",v:"427",org:"VIE",eta:"17:50",ao:"A321",h:"DC4",mat:"OE-LBD",stand:"80",cinta:"14",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3914",org:"BCN",eta:"17:55",ao:"A32A",h:"DD8",mat:"EC-OJH",stand:"90",cinta:"12",tipo:"CONTACTO"},
+  {cia:"TVF",v:"4718",org:"ORY",eta:"18:00",ao:"738W",h:"HU3",mat:"F-HTVN",stand:"60",cinta:"11",tipo:"CONTACTO"},
+  {cia:"AEA",v:"4014",org:"VLC",eta:"18:00",ao:"738W",h:"DC4",mat:"EC-OBK",stand:"92",cinta:"16",tipo:"CONTACTO"},
+  {cia:"AEA",v:"4027",org:"ALC",eta:"18:05",ao:"738W",h:"DC4",mat:"EC-NZR",stand:"94",cinta:"18",tipo:"CONTACTO"},
+  {cia:"RYR",v:"9801",org:"BCN",eta:"18:10",ao:"A320",h:"RYR",mat:"9H-LMP",stand:"40",cinta:"07",tipo:"CONTACTO"},
+  {cia:"RYR",v:"5520",org:"CGN",eta:"18:10",ao:"A320",h:"RYR",mat:"9H-IBJ",stand:"68",cinta:"08",tipo:"CONTACTO"},
+  {cia:"RYR",v:"5655",org:"BGY",eta:"18:15",ao:"B38M",h:"RYR",mat:"EI-ILB",stand:"64",cinta:"06",tipo:"CONTACTO"},
+  {cia:"IBS",v:"1669",org:"MAD",eta:"18:15",ao:"A320",h:"DD8",mat:"EC-LAA",stand:"86",cinta:"10",tipo:"CONTACTO"},
+  {cia:"AEA",v:"6079",org:"MAD",eta:"18:25",ao:"738W",h:"DC4",mat:"EC-MKL",stand:"96",cinta:"13",tipo:"CONTACTO"},
+  {cia:"RYR",v:"7885",org:"KUN",eta:"18:30",ao:"B38M",h:"RYR",mat:"SP-RZR",stand:"54",cinta:"09",tipo:"CONTACTO"},
+  {cia:"IBB",v:"5156",org:"TFN",eta:"18:30",ao:"E295",h:"HU3",mat:"EC-OLZ",stand:"88",cinta:"13",tipo:"CONTACTO"},
+  {cia:"OCN",v:"514",org:"FRA",eta:"18:35",ao:"A32A",h:"DC4",mat:"D-AIUT",stand:"98",cinta:"12",tipo:"CONTACTO"},
+  {cia:"RYR",v:"2061",org:"MAD",eta:"18:40",ao:"738W",h:"RYR",mat:"9H-QAJ",stand:"72",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EDW",v:"244",org:"ZRH",eta:"18:40",ao:"A320",h:"DC4",mat:"HB-IHY",stand:"82",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EWG",v:"4206",org:"PRG",eta:"18:45",ao:"A32A",h:"EWG",mat:"9H-EWC",stand:"50",cinta:"11",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7284",org:"GVA",eta:"18:45",ao:"A319",h:"EJU",mat:"OE-LQQ",stand:"100",cinta:"19",tipo:"REMOTO_BUS"},
+  {cia:"ANE",v:"2521",org:"IBZ",eta:"18:45",ao:"AT76",h:"DC4",mat:"EC-OOP",stand:"120",cinta:"16",tipo:"REMOTO_BUS"},
+  {cia:"ANE",v:"2323",org:"ILD",eta:"18:50",ao:"CRJX",h:"DC4",mat:"EC-MLN",stand:"119",cinta:"18",tipo:"REMOTO_BUS"},
+  {cia:"EJU",v:"5119",org:"BER",eta:"18:55",ao:"A32A",h:"EJU",mat:"OE-ICL",stand:"62",cinta:"17",tipo:"CONTACTO"},
+  {cia:"RYR",v:"502",org:"VIE",eta:"18:55",ao:"A320",h:"RYR",mat:"9H-LOU",stand:"52",cinta:"06",tipo:"CONTACTO"},
+  {cia:"EWG",v:"9592",org:"DUS",eta:"18:55",ao:"A320",h:"EWG",mat:"9H-EUV",stand:"42",cinta:"15",tipo:"CONTACTO"},
+  {cia:"RYR",v:"7418",org:"BLQ",eta:"19:00",ao:"A320",h:"RYR",mat:"9H-LOT",stand:"44",cinta:"07",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3916",org:"BCN",eta:"19:00",ao:"A32A",h:"DD8",mat:"EC-LVT",stand:"90",cinta:"09",tipo:"CONTACTO"},
+  {cia:"RYR",v:"7281",org:"FMO",eta:"19:10",ao:"A320",h:"RYR",mat:"9H-LMI",stand:"46",cinta:"08",tipo:"CONTACTO"},
+  {cia:"SWR",v:"2154",org:"ZRH",eta:"19:15",ao:"E295",h:"DC4",mat:"HB-AZK",stand:"84",cinta:"12",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3979",org:"ZAZ",eta:"19:15",ao:"A20N",h:"DD8",mat:"EC-NCS",stand:"92",cinta:"18",tipo:"CONTACTO"},
+  {cia:"TUI",v:"2322",org:"DUS",eta:"19:15",ao:"738W",h:"HS1",mat:"D-ATUF",stand:"80",cinta:"19",tipo:"CONTACTO"},
+  {cia:"BAW",v:"498",org:"LHR",eta:"19:25",ao:"A319",h:"HU3",mat:"G-DBCD",stand:"12",cinta:"10",tipo:"FINGER"},
+  {cia:"RYR",v:"4615",org:"VIT",eta:"19:25",ao:"738W",h:"RYR",mat:"EI-EBO",stand:"108",cinta:"06",tipo:"REMOTO_BUS"},
+  {cia:"EWG",v:"6807",org:"FMO",eta:"19:25",ao:"A320",h:"EWG",mat:"9H-EUM",stand:"40",cinta:"12",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3154",org:"XRY",eta:"19:25",ao:"A32A",h:"DD8",mat:"EC-MEQ",stand:"94",cinta:"11",tipo:"CONTACTO"},
+  {cia:"AEA",v:"1298",org:"ORY",eta:"19:25",ao:"738W",h:"DC4",mat:"EC-LPR",stand:"156",cinta:"13",tipo:"REMOTO_BUS"},
+  {cia:"RYR",v:"8396",org:"VLC",eta:"19:30",ao:"738W",h:"RYR",mat:"EI-DLW",stand:"60",cinta:"07",tipo:"CONTACTO"},
+  {cia:"AEA",v:"6073",org:"BCN",eta:"19:30",ao:"738W",h:"DC4",mat:"",stand:"86",cinta:"14",tipo:"CONTACTO"},
+  {cia:"RUK",v:"3468",org:"MAN",eta:"19:35",ao:"738W",h:"RYR",mat:"G-RUKI",stand:"10",cinta:"08",tipo:"FINGER"},
+  {cia:"EWG",v:"6839",org:"PAD",eta:"19:40",ao:"A320",h:"EWG",mat:"9H-EUC",stand:"50",cinta:"17",tipo:"CONTACTO"},
+  {cia:"EWG",v:"4094",org:"DTM",eta:"19:40",ao:"A320",h:"EWG",mat:"9H-EUL",stand:"28",cinta:"16",tipo:"FINGER"},
+  {cia:"LGL",v:"619",org:"LUX",eta:"19:40",ao:"737W",h:"DC4",mat:"LX-LBT",stand:"56",cinta:"15",tipo:"CONTACTO"},
+  {cia:"RYR",v:"2896",org:"BCN",eta:"19:45",ao:"738W",h:"RYR",mat:"EI-DCN",stand:"48",cinta:"09",tipo:"CONTACTO"},
+  {cia:"IBS",v:"1677",org:"MAD",eta:"19:50",ao:"A320",h:"DD8",mat:"EC-JFN",stand:"90",cinta:"10",tipo:"CONTACTO"},
+  {cia:"RYR",v:"2063",org:"MAD",eta:"19:55",ao:"738W",h:"RYR",mat:"EI-DYW",stand:"72",cinta:"06",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3651",org:"BRU",eta:"20:00",ao:"A20N",h:"DD8",mat:"EC-NCS",stand:"88",cinta:"19",tipo:"CONTACTO"},
+  {cia:"EXS",v:"1361",org:"BHX",eta:"20:00",ao:"738W",h:"EXS",mat:"G-DRTJ",stand:"20",cinta:"11",tipo:"FINGER"},
+  {cia:"MBU",v:"6776",org:"LEJ",eta:"20:00",ao:"A20N",h:"HS1",mat:"ES-MBG",stand:"58",cinta:"18",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6583",org:"TSF",eta:"20:10",ao:"738W",h:"RYR",mat:"9H-QAY",stand:"44",cinta:"08",tipo:"CONTACTO"},
+  {cia:"SAS",v:"2811",org:"CPH",eta:"20:10",ao:"A20N",h:"DC4",mat:"",stand:"54",cinta:"17",tipo:"CONTACTO"},
+  {cia:"EWG",v:"2590",org:"STR",eta:"20:10",ao:"A320",h:"EWG",mat:"9H-EUN",stand:"42",cinta:"14",tipo:"CONTACTO"},
+  {cia:"RYR",v:"9916",org:"LBC",eta:"20:20",ao:"738W",h:"RYR",mat:"EI-ENM",stand:"46",cinta:"06",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6803",org:"DRS",eta:"20:20",ao:"A32A",h:"EWG",mat:"9H-EWI",stand:"29",cinta:"13",tipo:"CONTACTO"},
+  {cia:"RYR",v:"8206",org:"FKB",eta:"20:20",ao:"738W",h:"RYR",mat:"9H-QDO",stand:"40",cinta:"07",tipo:"CONTACTO"},
+  {cia:"AEA",v:"6097",org:"MAD",eta:"20:20",ao:"738W",h:"DC4",mat:"",stand:"96",cinta:"10",tipo:"CONTACTO"},
+  {cia:"VLG",v:"6942",org:"ORY",eta:"20:25",ao:"A32A",h:"DD8",mat:"EC-MLE",stand:"98",cinta:"11",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2487",org:"MAH",eta:"20:30",ao:"AT76",h:"DC4",mat:"EC-NBG",stand:"34B",cinta:"16",tipo:"REMOTO_BUS"},
+  {cia:"EWG",v:"6851",org:"HAJ",eta:"20:30",ao:"A320",h:"EWG",mat:"9H-EUS",stand:"64",cinta:"15",tipo:"CONTACTO"},
+  {cia:"TVS",v:"1164",org:"PRG",eta:"20:35",ao:"BCS3",h:"DC4",mat:"",stand:"38",cinta:"12",tipo:"CONTACTO"},
+  {cia:"RYR",v:"9806",org:"FDH",eta:"20:40",ao:"A320",h:"RYR",mat:"9H-LMJ",stand:"48",cinta:"09",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6656",org:"EDI",eta:"20:45",ao:"B38M",h:"RYR",mat:"9H-VUI",stand:"10",cinta:"08",tipo:"FINGER"},
+  {cia:"TVF",v:"4812",org:"NTE",eta:"20:45",ao:"738W",h:"HU3",mat:"",stand:"52",cinta:"12",tipo:"CONTACTO"},
+  {cia:"IBE",v:"1401",org:"MAD",eta:"20:50",ao:"A20N",h:"DD8",mat:"",stand:"154",cinta:"10",tipo:"REMOTO_BUS"},
+  {cia:"RYR",v:"2881",org:"CPH",eta:"21:00",ao:"B38M",h:"RYR",mat:"EI-IHS",stand:"68",cinta:"06",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3985",org:"SCQ",eta:"21:05",ao:"A320",h:"DD8",mat:"EC-JTQ",stand:"94",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6845",org:"BER",eta:"21:20",ao:"A320",h:"EWG",mat:"9H-EUQ",stand:"50",cinta:"13",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3968",org:"GRX",eta:"21:20",ao:"A32A",h:"DD8",mat:"EC-OKJ",stand:"155",cinta:"15",tipo:"REMOTO_BUS"},
+  {cia:"IBS",v:"1675",org:"MAD",eta:"21:20",ao:"A320",h:"DD8",mat:"EC-ILR",stand:"90",cinta:"09",tipo:"CONTACTO"},
+  {cia:"RYR",v:"8552",org:"FMM",eta:"21:25",ao:"738W",h:"RYR",mat:"EI-EMI",stand:"27",cinta:"06",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6750",org:"OPO",eta:"21:25",ao:"738W",h:"RYR",mat:"EI-DWO",stand:"72",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EWG",v:"4124",org:"NUE",eta:"21:35",ao:"A32A",h:"EWG",mat:"9H-EWB",stand:"46",cinta:"17",tipo:"CONTACTO"},
+  {cia:"ANE",v:"2525",org:"IBZ",eta:"21:35",ao:"AT76",h:"DC4",mat:"EC-LQV",stand:"34B",cinta:"16",tipo:"REMOTO_BUS"},
+  {cia:"RYR",v:"2775",org:"MAD",eta:"21:35",ao:"738W",h:"RYR",mat:"9H-QFB",stand:"40",cinta:"07",tipo:"CONTACTO"},
+  {cia:"EFW",v:"2672",org:"LGW",eta:"21:40",ao:"A321",h:"HU3",mat:"",stand:"08",cinta:"12",tipo:"CONTACTO"},
+  {cia:"EWG",v:"6827",org:"FKB",eta:"21:40",ao:"A320",h:"EWG",mat:"9H-EUW",stand:"44",cinta:"18",tipo:"CONTACTO"},
+  {cia:"EXS",v:"925",org:"MAN",eta:"21:40",ao:"A21N",h:"EXS",mat:"G-SUNO",stand:"18",cinta:"10",tipo:"FINGER"},
+  {cia:"EWG",v:"6893",org:"MUC",eta:"21:45",ao:"A32A",h:"EWG",mat:"D-AEWT",stand:"42",cinta:"15",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3918",org:"BCN",eta:"21:45",ao:"A32A",h:"DD8",mat:"EC-MAI",stand:"88",cinta:"09",tipo:"CONTACTO"},
+  {cia:"WZZ",v:"1703",org:"GDN",eta:"21:50",ao:"A21N",h:"HU3",mat:"9H-WNC",stand:"38",cinta:"11",tipo:"CONTACTO"},
+  {cia:"TRA",v:"6511",org:"EIN",eta:"21:50",ao:"A21N",h:"HU3",mat:"PH-YHC",stand:"56",cinta:"14",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7286",org:"GVA",eta:"22:00",ao:"A32A",h:"EJU",mat:"HB-JXP",stand:"26",cinta:"13",tipo:"FINGER"},
+  {cia:"RYR",v:"8662",org:"CGN",eta:"22:05",ao:"738W",h:"RYR",mat:"EI-EPC",stand:"48",cinta:"08",tipo:"CONTACTO"},
+  {cia:"SWT",v:"7888",org:"MAH",eta:"22:10",ao:"AT75",h:"DC4",mat:"",stand:"32",cinta:"16",tipo:"CONTACTO"},
+  {cia:"EJU",v:"3749",org:"MXP",eta:"22:15",ao:"A32A",h:"EJU",mat:"OE-INE",stand:"52",cinta:"14",tipo:"CONTACTO"},
+  {cia:"RYR",v:"3070",org:"BCN",eta:"22:20",ao:"738W",h:"RYR",mat:"9H-QCU",stand:"72",cinta:"06",tipo:"CONTACTO"},
+  {cia:"WZZ",v:"2383",org:"BUD",eta:"22:20",ao:"A21N",h:"HU3",mat:"HA-LVJ",stand:"54",cinta:"12",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3150",org:"AGP",eta:"22:30",ao:"A32A",h:"DD8",mat:"EC-LVO",stand:"86",cinta:"13",tipo:"CONTACTO"},
+  {cia:"VLG",v:"3920",org:"BCN",eta:"22:35",ao:"A32A",h:"DD8",mat:"EC-MVD",stand:"92",cinta:"09",tipo:"CONTACTO"},
+  {cia:"RYR",v:"1305",org:"SVQ",eta:"22:35",ao:"B38M",h:"RYR",mat:"EI-ILB",stand:"25",cinta:"07",tipo:"CONTACTO"},
+  {cia:"AEA",v:"6103",org:"BCN",eta:"22:45",ao:"738W",h:"DC4",mat:"",stand:"94",cinta:"14",tipo:"CONTACTO"},
+  {cia:"RYR",v:"4813",org:"LPL",eta:"22:50",ao:"738W",h:"RYR",mat:"EI-GSK",stand:"20",cinta:"08",tipo:"FINGER"},
+  {cia:"IBS",v:"1683",org:"MAD",eta:"22:50",ao:"A320",h:"DD8",mat:"EC-LAA",stand:"90",cinta:"12",tipo:"CONTACTO"},
+  {cia:"RYR",v:"6601",org:"EMA",eta:"23:00",ao:"B38M",h:"RYR",mat:"EI-IKP",stand:"10",cinta:"06",tipo:"FINGER"},
+  {cia:"RYR",v:"1954",org:"BHX",eta:"23:05",ao:"738W",h:"RYR",mat:"9H-QCE",stand:"16",cinta:"09",tipo:"FINGER"},
+  {cia:"EJU",v:"7254",org:"BHX",eta:"23:05",ao:"A32A",h:"EJU",mat:"OE-IJH",stand:"04",cinta:"10",tipo:"CONTACTO"},
+  {cia:"AEA",v:"6049",org:"MAD",eta:"23:05",ao:"738W",h:"DC4",mat:"",stand:"88",cinta:"11",tipo:"CONTACTO"},
+  {cia:"EZY",v:"3361",org:"LPL",eta:"23:15",ao:"A32A",h:"EJU",mat:"G-EZRX",stand:"14",cinta:"12",tipo:"FINGER"},
+  {cia:"RYR",v:"6565",org:"ALC",eta:"23:20",ao:"738W",h:"RYR",mat:"EI-DYY",stand:"48",cinta:"08",tipo:"CONTACTO"},
+  {cia:"EZY",v:"2333",org:"LTN",eta:"23:25",ao:"A20N",h:"EJU",mat:"G-UZLB",stand:"12",cinta:"14",tipo:"FINGER"},
+  {cia:"VLG",v:"3947",org:"SVQ",eta:"23:35",ao:"A20N",h:"DD8",mat:"EC-NCS",stand:"82",cinta:"16",tipo:"CONTACTO"},
+  {cia:"NSZ",v:"5601",org:"ARN",eta:"23:35",ao:"738W",h:"HU3",mat:"",stand:"62",cinta:"11",tipo:"CONTACTO"},
+  {cia:"RYR",v:"5700",org:"BGY",eta:"23:40",ao:"A320",h:"RYR",mat:"9H-LMI",stand:"104",cinta:"06",tipo:"REMOTO_BUS"},
+  {cia:"EJU",v:"7266",org:"MAN",eta:"23:40",ao:"A32A",h:"EJU",mat:"OE-INL",stand:"100",cinta:"10",tipo:"REMOTO_BUS"},
+  {cia:"VLG",v:"3922",org:"BCN",eta:"23:40",ao:"A32A",h:"DD8",mat:"EC-MLE",stand:"154",cinta:"13",tipo:"REMOTO_BUS"},
+  {cia:"NSZ",v:"5613",org:"CPH",eta:"23:40",ao:"738W",h:"HU3",mat:"",stand:"64",cinta:"15",tipo:"CONTACTO"},
+  {cia:"EJU",v:"7264",org:"SEN",eta:"23:55",ao:"A32A",h:"EJU",mat:"OE-IVB",stand:"103",cinta:"12",tipo:"REMOTO_BUS"},
 ];
 
 let selTipo = 'ALL', selH = 'ALL';
@@ -438,23 +568,50 @@ function renderHandlers(){
     const rb=hf.filter(f=>f.tipo==='REMOTO_BUS').length;
     const rp=hf.filter(f=>f.tipo==='REMOTO_PIE').length;
     const nd=hf.filter(f=>f.tipo==='ND').length;
+
     const d=document.createElement('div');
     d.className='hcard fade-in';
     d.style.cssText=`background:linear-gradient(135deg,${info.color}0c,var(--bg3));border-color:${info.color}33;`;
+
     let bars='';
     if(fn) bars+=`<div class="hbar" style="background:rgba(0,245,212,0.1);border-color:rgba(0,245,212,0.25)"><div class="hbar-n" style="color:var(--finger)">${fn}</div><div class="hbar-l" style="color:var(--finger)">Finger</div></div>`;
     if(co) bars+=`<div class="hbar" style="background:rgba(76,201,240,0.1);border-color:rgba(76,201,240,0.25)"><div class="hbar-n" style="color:var(--contacto)">${co}</div><div class="hbar-l" style="color:var(--contacto)">Contacto</div></div>`;
     if(rb) bars+=`<div class="hbar" style="background:rgba(248,150,30,0.1);border-color:rgba(248,150,30,0.25)"><div class="hbar-n" style="color:var(--rbus)">${rb}</div><div class="hbar-l" style="color:var(--rbus)">Rem.Bus</div></div>`;
     if(rp) bars+=`<div class="hbar" style="background:rgba(247,37,133,0.1);border-color:rgba(247,37,133,0.25)"><div class="hbar-n" style="color:var(--rpie)">${rp}</div><div class="hbar-l" style="color:var(--rpie)">Rem.Pie</div></div>`;
     if(nd) bars+=`<div class="hbar" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1)"><div class="hbar-n" style="color:var(--muted)">${nd}</div><div class="hbar-l" style="color:var(--muted)">N/D</div></div>`;
+
+    // Build flight list rows
+    const flightRows = hf.map(f=>{
+      const tc = {FINGER:'var(--finger)',CONTACTO:'var(--contacto)',REMOTO_BUS:'var(--rbus)',REMOTO_PIE:'var(--rpie)',ND:'var(--muted)'}[f.tipo]||'var(--muted)';
+      return `<div class="hfl-row">
+        <span class="hfl-vuelo" style="color:${info.color}">${f.cia} ${f.v}</span>
+        <span class="hfl-org">${f.org}</span>
+        <span class="hfl-stand" style="color:${tc}">STD ${f.stand}</span>
+        <span class="hfl-eta" style="color:${info.color}">${f.eta}</span>
+      </div>`;
+    }).join('');
+
+    const listId = `hfl-${code}`;
     d.innerHTML=`
       <div class="hcard-top">
         <div><div class="hcard-code" style="color:${info.color}">${code}</div><div class="hcard-name">${info.name}</div></div>
-        <div class="hcard-total"><div class="hcard-n" style="color:${info.color}">${hf.length}</div><div class="hcard-nlabel">vuelos</div></div>
+        <button class="hcard-total hcard-toggle" onclick="toggleFlights('${listId}','${code}')" style="background:none;border:none;cursor:pointer;text-align:right;-webkit-tap-highlight-color:transparent;">
+          <div class="hcard-n" style="color:${info.color}">${hf.length}</div>
+          <div class="hcard-nlabel" style="color:${info.color}">vuelos ▸</div>
+        </button>
       </div>
-      <div class="hcard-bars">${bars}</div>`;
+      <div class="hcard-bars">${bars}</div>
+      <div id="${listId}" class="hfl-list" style="display:none;">${flightRows}</div>`;
     el.appendChild(d);
   });
+}
+
+function toggleFlights(id, code){
+  const el = document.getElementById(id);
+  const btn = el.previousElementSibling.previousElementSibling.querySelector('.hcard-nlabel');
+  const isOpen = el.style.display !== 'none';
+  el.style.display = isOpen ? 'none' : 'block';
+  if(btn) btn.textContent = isOpen ? 'vuelos ▸' : 'vuelos ▾';
 }
 
 function renderGuiaHandlers(){
